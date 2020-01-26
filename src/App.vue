@@ -1,19 +1,37 @@
 <template>
   <div id="app">
     <nav>
-      <md-toolbar class="md-accent" md-elevation="0">
-        <h3 class="md-title" style="flex: 1">
-          <router-link class="brand-logo" to="/">wyszukiwarka</router-link>
-        </h3>
-        <md-button> <router-link class="m" to="/about">o stronie</router-link> </md-button>
-      </md-toolbar>
+      <h3>
+        <router-link class="brand-logo" to="/">GI</router-link>
+      </h3>
+      <div class="nav-content">
+        <router-link to="/about">o stronie</router-link>
+      </div>
     </nav>
     <router-view />
   </div>
 </template>
 
 <style lang="scss">
-nav a:hover {
-  text-decoration: none !important;
+@import url("https://fonts.googleapis.com/css?family=Montserrat:400,700&display=swap");
+html{
+  width: 100vw;
+  height: 100vh;
+  margin: 0;
+}
+body {
+  font-family: "Montserrat", sans-serif;
+}
+nav {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  a {
+    text-decoration: none !important;
+
+    &:hover {
+    }
+  }
 }
 </style>
