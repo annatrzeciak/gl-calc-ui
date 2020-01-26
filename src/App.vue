@@ -1,37 +1,30 @@
 <template>
   <div id="app">
-    <nav>
-      <h3>
-        <router-link class="brand-logo" to="/">GI</router-link>
-      </h3>
-      <div class="nav-content">
-        <router-link to="/about">o stronie</router-link>
-      </div>
-    </nav>
+    <Navbar />
     <router-view />
   </div>
 </template>
 
 <style lang="scss">
-@import url("https://fonts.googleapis.com/css?family=Montserrat:400,700&display=swap");
-html{
+@import url("https://fonts.googleapis.com/css?family=Montserrat:300,400,600,800&display=swap");
+* {
+  box-sizing: border-box;
+}
+html {
   width: 100vw;
   height: 100vh;
   margin: 0;
 }
 body {
   font-family: "Montserrat", sans-serif;
-}
-nav {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-
-  a {
-    text-decoration: none !important;
-
-    &:hover {
-    }
-  }
+  margin: 0;
+  padding: 0;
 }
 </style>
+<script>
+import Navbar from "@/components/Navbar.vue";
+
+export default {
+  components: { Navbar }
+};
+</script>
