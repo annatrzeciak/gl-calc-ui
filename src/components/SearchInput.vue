@@ -1,14 +1,21 @@
 <template>
   <div class="searchWrapper">
-    <input id="text" name="search" type="search" @keyup="$emit('filter', $event.target.value)" />
+    <input
+      :class="{ dark }"
+      id="text"
+      name="search"
+      type="search"
+      @keyup="$emit('filter', $event.target.value)"
+    />
   </div>
 </template>
 
 <script>
 export default {
   name: "SearchInput",
-  props:{
-    value: {type: String, required:true}
+  props: {
+    value: { type: String, required: true },
+    dark: { type: Boolean, default: false }
   }
 };
 </script>
@@ -44,6 +51,14 @@ export default {
     &:focus {
       outline: none;
       box-shadow: 0 10px 20px -8px rgba(255, 255, 255, 0.4);
+    }
+    &.dark {
+      color: #1e3d4a;
+      border-bottom-color: #1e3d4a;
+      &:focus {
+        outline: none;
+        box-shadow: 0 10px 20px -8px rgba(#1e3d4a, 0.4);
+      }
     }
   }
 }
