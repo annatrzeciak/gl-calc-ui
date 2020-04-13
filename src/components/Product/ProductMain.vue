@@ -1,6 +1,6 @@
 <template>
-  <b-col md="3" sm="6">
-    <div class="product-main-info">
+  <b-col md="4" sm="6">
+    <div class="product-main-info m-2">
       <img
         :src="product.photo ? product.photo : '/images/default-image.png'"
         :alt="product.name_pl"
@@ -26,10 +26,9 @@ export default {
     font-weight: bold;
   }
   &-info {
-    width: calc(100% - 30px);
-    height: calc(100% - 60px);
+    width: calc(100% - 0.5rem);
+    height: calc(100% - 2rem);
     color: black;
-    margin: 15px;
     box-sizing: border-box;
     float: left;
     min-height: 400px;
