@@ -1,37 +1,58 @@
 <template>
-  <nav>
-    <h3>
-      <router-link class="brand-logo" to="/">GI</router-link>
-    </h3>
-    <div class="nav-content">
-      <router-link to="/about">o stronie</router-link>
-    </div>
-  </nav>
+  <b-navbar toggleable="lg" type="dark" class="text-shadow">
+    <b-navbar-brand class="font-weight-bold">
+      <router-link to="/">Oblicz GL</router-link>
+    </b-navbar-brand>
+    <b-collapse id="nav-collapse" is-nav>
+      <b-navbar-nav class="ml-auto">
+        <b-nav-item>
+          <router-link to="/szukaj">szukaj</router-link>
+        </b-nav-item>
+        <b-nav-item>
+          <router-link to="/wiecej">o stronie</router-link>
+        </b-nav-item>
+      </b-navbar-nav>
+    </b-collapse>
+  </b-navbar>
 </template>
 
 <script>
 export default {
-  name: "Navbar"
+  name: "Navbar",
+  props: { dark: { type: Boolean } },
+  data() {
+    return {
+      isDark: true
+    };
+  }
 };
 </script>
 
 <style lang="scss" scoped>
+@import "../styles/colors";
 nav {
-  width: 100%;
-  padding-right: 15px;
-  padding-left: 15px;
+  top: 0;
   position: fixed;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-
+  width: 100%;
+  max-width: 100%;
+  z-index: 100;
+  background: rgba(0, 0, 0, 0.5);
+  &.navbar-light a {
+    color: #000000;
+  }
+  &.navbar-dark a {
+    color: #ffffff;
+    font-weight: 600;
+  }
+  .navbar-brand a{
+    font-weight: 800;
+  }
   a {
     text-decoration: none !important;
-    color: white;
-    opacity: .7;
 
     &:hover {
       opacity: 1;
+      color: $green;
     }
   }
 }
