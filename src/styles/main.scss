@@ -21,10 +21,30 @@ body {
   display: flex;
   flex-direction: column;
 }
+.dark-blue-text{
+  color: $darkBlue;
+}
+.blue-text{
+  color: $blue;
+}
+.turquoise-text{
+  color: $turquoise;
+
+}
+.orange-text{
+  color: $orange;
+}
+.grey-text{
+  color: $grey;
+}
+.light-grey-text{
+  color: $lightGrey;
+}
+
 a{
-  color: $green;
+  color: $darkBlue;
   &:hover{
-    color: $green;
+    color: $darkBlue;
   }
 }
 .btn{
@@ -41,11 +61,11 @@ a{
     box-shadow: 0 2px 7px rgba(0,0,0,0.5);
     transition: 0.2s;
     &:hover{
-      background: $green;
+      background: $darkBlue;
       border-color: $white;
     }
     &:active, &:focus{
-      background: $green !important;
+      background: $darkBlue !important;
       border-color: $white !important;
     }
     &:active{
@@ -58,4 +78,7 @@ a{
 .text-shadow{
   text-shadow: 0 2px 4px rgba(0,0,0,0.5);
 
+}
+.smaller-text {
+  font-size: 12px;
 }

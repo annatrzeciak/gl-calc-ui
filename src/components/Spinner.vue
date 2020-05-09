@@ -1,12 +1,7 @@
 <template>
   <div class="loading-container">
     <!-- By Sam Herbert (@sherb), for everyone. More @ http://goo.gl/7AJzbL -->
-    <svg
-      width="44"
-      height="44"
-      viewBox="0 0 44 44"
-      xmlns="http://www.w3.org/2000/svg"
-    >
+    <svg width="44" height="44" viewBox="0 0 44 44" xmlns="http://www.w3.org/2000/svg">
       <g fill="none" fill-rule="evenodd" stroke-width="2">
         <circle cx="22" cy="22" r="1">
           <animate
@@ -67,6 +62,8 @@ export default {
 </script>
 
 <style type="text/scss" lang="scss" scoped>
+@import "./../styles/colors";
+
 .loading-container {
   display: flex;
   height: 90%;
@@ -76,7 +73,7 @@ export default {
   align-content: center;
   align-items: center;
   > svg {
-    stroke: #88c000;
+    stroke: $darkBlue;
     height: 50px;
     width: 50px;
   }

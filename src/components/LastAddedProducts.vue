@@ -95,6 +95,8 @@ export default {
 </script>
 
 <style scoped lang="scss">
+@import "./../styles/colors";
+
 .slick-content {
   margin-top: 15vh;
   a {
@@ -113,7 +115,7 @@ export default {
       font-weight: 600;
       font-size: 18px;
       position: absolute;
-      color: white;
+      color: $white;
       bottom: 0;
       width: calc(100% - 60px);
       background: rgba(0, 0, 0, 0.5);

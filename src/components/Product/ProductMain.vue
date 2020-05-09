@@ -1,21 +1,71 @@
 <template>
-  <b-col md="4" sm="6">
-    <div class="product-main-info m-2">
-      <img
-        :src="product.photo ? product.photo : '/images/default-image.png'"
-        :alt="product.name_pl"
-      />
-      <h4 class="product-main-header">{{ product.name_pl }}</h4>
-      <h5>{{ product.name }}/{{ product._id }}</h5>
+  <b-col :md="isShowedDetails ? 12 : 4" :sm="isShowedDetails ? 12 : 6">
+    <div :class="['product-main-info' ,'m-2',{'details-showed': isShowedDetails}]" @click="showDetails">
+      <b-row>
+        <b-col :md="isShowedDetails ? 4 : 12" :sm="isShowedDetails ? 6 : 12">
+          <img
+            :src="product.photo ? product.photo : '/images/default-image.png'"
+            :alt="product.name_pl"
+          />
+          <h4 class="product-main-header">{{ product.name_pl }}</h4>
+          <h5>{{ product.name }}/{{ product._id }}</h5>
+        </b-col>
+        <ProductMainNutritionalValues
+          v-if="isShowedDetails"
+          :productDetails="productDetails"
+          :detailsAreLoaded="detailsAreLoaded"
+        />
+        <ProductAdditionalNutritionalValues
+          v-if="isShowedDetails"
+          :productDetails="productDetails"
+          :detailsAreLoaded="detailsAreLoaded"
+        />
+      </b-row>
     </div>
   </b-col>
 </template>
 
 <script>
+import debounce from "lodash.debounce";
+import axios from "axios";
+import ProductAdditionalNutritionalValues from "@/components/Product/ProductAdditionalNutritionalValues.vue";
+import ProductMainNutritionalValues from "@/components/Product/ProductMainNutritionalValues.vue";
+
 export default {
   name: "ProductMain",
+  components: { ProductAdditionalNutritionalValues, ProductMainNutritionalValues },
   props: {
     product: { type: Object, required: true }
+  },
+  data() {
+    return {
+      detailsAreLoaded: false,
+      isShowedDetails: false,
+      productDetails: {}
+    };
+  },
+  methods: {
+    showDetails() {
+      this.isShowedDetails = true;
+      this.loadDetails();
+    },
+    hideDetails() {
+      this.isShowedDetails = false;
+    },
+    loadDetails: debounce(function() {
+      if (this.product) {
+        this.detailsAreLoaded = true;
+        axios
+          .get("http://localhost:3000/api/details/" + this.product._id)
+          .then(response => {
+            this.detailsAreLoaded = false;
+            this.productDetails = response.data.details;
+          })
+          .catch(e => {
+            console.error(e);
+          });
+      }
+    }, 500)
   }
 };
 </script>
@@ -37,7 +87,7 @@ export default {
     -webkit-box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.5);
     box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.5);
     opacity: 0.8;
-    &:hover {
+    &:hover, &.details-showed{
       cursor: pointer;
       opacity: 1;
     }

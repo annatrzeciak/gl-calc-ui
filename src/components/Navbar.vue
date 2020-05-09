@@ -5,12 +5,8 @@
     </b-navbar-brand>
     <b-collapse id="nav-collapse" is-nav>
       <b-navbar-nav class="ml-auto">
-        <b-nav-item>
-          <router-link to="/szukaj">szukaj</router-link>
-        </b-nav-item>
-        <b-nav-item>
-          <router-link to="/wiecej">o stronie</router-link>
-        </b-nav-item>
+        <router-link to="/szukaj">szukaj</router-link>
+        <router-link to="/wiecej">o stronie</router-link>
       </b-navbar-nav>
     </b-collapse>
   </b-navbar>
@@ -41,18 +37,21 @@ nav {
     color: #000000;
   }
   &.navbar-dark a {
-    color: #ffffff;
+    color: $white;
     font-weight: 600;
   }
-  .navbar-brand a{
+  .navbar-brand a {
     font-weight: 800;
   }
   a {
     text-decoration: none !important;
+    border-bottom: 2px solid transparent;
+    padding: 3px 5px;
+
 
     &:hover {
       opacity: 1;
-      color: $green;
+      border-bottom: 2px solid $darkBlue;
     }
   }
 }

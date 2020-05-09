@@ -2,7 +2,12 @@
   <div :class="['search-page', { 'has-results': filteredProducts.length }]">
     <b-container fluid>
       <h1 class="text-center font-weight-bold">Znajdź interesujący Cię produkt</h1>
-      <SearchInput v-if="!loading" :value="searchValue" @filter="filterProducts" :disabled="loading" />
+      <SearchInput
+        v-if="!loading"
+        :value="searchValue"
+        @filter="filterProducts"
+        :disabled="loading"
+      />
 
       <Spinner v-if="loading" class="mt-4" />
       <div class="results" v-if="filteredProducts && !loading && step === 1">

@@ -15,16 +15,18 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+@import "./../styles/colors";
+
 footer {
   margin-top: auto;
   margin-bottom: 0;
   width: 100%;
-  .footer-content{
+  .footer-content {
     margin-top: 10px;
-    background: #88c000;
+    background: $darkBlue;
     color: white;
     font-weight: bold;
-    padding: 5px  ;
+    padding: 5px;
   }
 }
 </style>
