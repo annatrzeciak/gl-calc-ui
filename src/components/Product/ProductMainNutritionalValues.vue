@@ -37,16 +37,24 @@
                 <td>Energia (Kcal):</td>
                 <td class="text-right">
                   {{
-                    productDetails.energyKcal
-                      ? Math.round(productDetails.energyKcal.val * 100) / 100
-                      : Math.round(productDetails.energyKj.val / 418.58) / 100
+                    Math.round(
+                      (productDetails.energyKcal
+                        ? productDetails.energyKcal.val
+                        : productDetails.energyKj.val / 4.1858) * 100
+                    ) / 100
                   }}
                 </td>
                 <td>
-                  {{ productDetails.energyKcal.unit }}
+                  {{ productDetails.energyKcal ? productDetails.energyKcal.unit : "kcal" }}
                 </td>
                 <td class="text-right">
-                  {{ Math.round(productDetails.energyKcal.percentRI * 100) / 100 }}%
+                  {{
+                    Math.round(
+                      productDetails.energyKcal
+                        ? productDetails.energyKcal.percentRI
+                        : productDetails.energyKj.percentRI * 100
+                    ) / 100
+                  }}%
                 </td>
               </tr>
               <tr v-if="productDetails.fat">

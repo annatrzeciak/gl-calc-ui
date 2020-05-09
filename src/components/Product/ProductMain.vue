@@ -1,6 +1,10 @@
 <template>
-  <b-col :md="isShowedDetails ? 12 : 4" :sm="isShowedDetails ? 12 : 6">
-    <div :class="['product-main-info' ,'m-2',{'details-showed': isShowedDetails}]" @click="showDetails">
+  <b-col  :id="'product-main-info-' + product._id" :md="isShowedDetails ? 12 : 4" :sm="isShowedDetails ? 12 : 6">
+    <div
+
+      :class="['product-main-info', 'm-2', { 'details-showed': isShowedDetails }]"
+      @click="showDetails"
+    >
       <b-row>
         <b-col :md="isShowedDetails ? 4 : 12" :sm="isShowedDetails ? 6 : 12">
           <img
@@ -55,6 +59,7 @@ export default {
     loadDetails: debounce(function() {
       if (this.product) {
         this.detailsAreLoaded = true;
+        this.$emit('scroll-list-to-product', this.product._id)
         axios
           .get("http://localhost:3000/api/details/" + this.product._id)
           .then(response => {
@@ -87,7 +92,8 @@ export default {
     -webkit-box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.5);
     box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.5);
     opacity: 0.8;
-    &:hover, &.details-showed{
+    &:hover,
+    &.details-showed {
       cursor: pointer;
       opacity: 1;
     }

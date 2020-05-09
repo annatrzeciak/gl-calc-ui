@@ -1,7 +1,7 @@
 <template>
   <div>
     <svg id="graph" width="200" height="200" v-html="graph"></svg>
-    <div v-if="carbs && protein && fat">
+    <div v-if="carbs || protein || fat">
       <div class="dark-blue-text ">Węglowodany: {{ Math.round(carbs * 100) / 100 }}%</div>
       <div class="turquoise-text">Białko: {{ Math.round(protein * 100) / 100 }}%</div>
       <div class="orange-text">Tłuszcz: {{ Math.round(fat * 100) / 100 }}%</div>
@@ -27,10 +27,7 @@ export default {
   }),
   computed: {
     graph() {
-      console.log(this.carbs);
-      console.log(this.protein);
-      console.log(this.fat);
-      if (this.carbs && this.protein && this.fat) {
+      if (this.carbs || this.protein || this.fat) {
         let array = [];
         const data = [
           { value: this.carbs, color: "#08629E" },
@@ -46,35 +43,36 @@ export default {
         for (let i = 0; i < data.length; i++) total += data[i].value;
         for (let i = 0; i < data.length; i++) {
           let item = data[i];
+          if (Math.round(item.value * 100) / 100 > 0.5) {
+            let p = Math.floor(((item.value + 1) / total) * 100 * 100) / 100;
+            count += p;
 
-          let p = Math.floor(((item.value + 1) / total) * 100 * 100) / 100;
-          count += p;
+            if (i === length - 1 && count < 100) p = p + (100 - count);
 
-          if (i === length - 1 && count < 100) p = p + (100 - count);
+            end = beg + (360 / 100) * p;
 
-          end = beg + (360 / 100) * p;
+            let b = this.arcradius(this.centerX, this.centerY, this.radius, end);
+            let e = this.arcradius(this.centerX, this.centerY, this.radius, beg);
+            let la = end - beg <= 180 ? 0 : 1;
 
-          let b = this.arcradius(this.centerX, this.centerY, this.radius, end);
-          let e = this.arcradius(this.centerX, this.centerY, this.radius, beg);
-          let la = end - beg <= 180 ? 0 : 1;
-
-          const d = [
-            "M",
-            Math.floor(b.x * 10000) / 10000,
-            Math.floor(b.y * 10000) / 10000,
-            "A",
-            this.radius,
-            this.radius,
-            0,
-            la,
-            0,
-            Math.floor(e.x * 10000) / 10000,
-            Math.floor(e.y * 10000) / 10000
-          ].join(" ");
-          beg = end;
-          array.push(`<g>
+            const d = [
+              "M",
+              Math.floor(b.x * 10000) / 10000,
+              Math.floor(b.y * 10000) / 10000,
+              "A",
+              this.radius,
+              this.radius,
+              0,
+              la,
+              0,
+              Math.floor(e.x * 10000) / 10000,
+              Math.floor(e.y * 10000) / 10000
+            ].join(" ");
+            beg = end;
+            array.push(`<g>
                   <path d="${d}" stroke="${item.color}" fill="none" stroke-width="50" />
              </g>`);
+          }
         }
         array.push(`
           <switch>

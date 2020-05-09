@@ -13,7 +13,12 @@
       <div class="results" v-if="filteredProducts && !loading && step === 1">
         <p class="text-right">Znaleziono {{ filteredProducts.length }} {{ productsLabel }}</p>
         <b-row>
-          <ProductMain v-for="product in filteredProducts" :key="product._id" :product="product" />
+          <ProductMain
+            @scroll-list-to-product="scrollToProduct($event)"
+            v-for="product in filteredProducts"
+            :key="product._id"
+            :product="product"
+          />
         </b-row>
       </div>
     </b-container>
@@ -56,6 +61,18 @@ export default {
         behavior: "smooth",
         left: 0,
         top: headerHeight
+      });
+    },
+    scrollToProduct(productId) {
+      console.log(document.getElementById("product-main-info-" + productId).clientTop);
+      const productComponent = document.getElementById("product-main-info-" + productId);
+      const navbar = document.querySelector("nav");
+
+      console.log(productComponent);
+      window.scrollTo({
+        behavior: "smooth",
+        left: 0,
+        top: productComponent.offsetTop - navbar.clientHeight
       });
     },
     filterProducts: debounce(function(value) {

@@ -16,11 +16,19 @@
             }}{{ productDetails.energyKj.unit }}
           </div>
         </div>
-        <div class="d-flex justify-content-between" v-if="productDetails.energyKcal">
+        <div
+          class="d-flex justify-content-between"
+          v-if="productDetails.energyKcal || productDetails.energyKj"
+        >
           <div>Energia (Kcal)</div>
           <div>
-            {{ Math.round(productDetails.energyKcal.val * 100) / 100
-            }}{{ productDetails.energyKcal.unit }}
+            {{
+              Math.round(
+                (productDetails.energyKcal
+                  ? productDetails.energyKcal.val
+                  : productDetails.energyKj.val / 4.1858) * 100
+              ) / 100
+            }}{{ productDetails.energyKcal ? productDetails.energyKcal.unit : "kcal" }}
           </div>
         </div>
         <h6 class="font-weight-bold text-right">Makroskładniki</h6>
@@ -388,6 +396,13 @@
           <div>Ładunek glikochemiczny</div>
           <div>
             {{ Math.round(productDetails.gi.val * productDetails.carbohydrate.val) / 100 }}
+          </div>
+        </div>
+        <div class="d-flex justify-content-between" v-if="productDetails.caffeine">
+          <div>Kofeina</div>
+          <div>
+            {{ Math.round(productDetails.caffeine.val * 100) / 100
+            }}{{ productDetails.caffeine.unit }}
           </div>
         </div>
       </b-col>
