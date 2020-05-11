@@ -2,13 +2,16 @@
   <div class="slick-content text-center">
     <h3 class="font-weight-bold">Ostatnio dodane produkty</h3>
     <slick ref="slick" :options="slickOptions">
-      <a v-for="product in productsLastAdded" :key="product._id" href="/">
+      <router-link   :to="{
+          name: 'product-id',
+          params: { searchValue: product.name_pl, productId:product._id }
+        }" v-for="product in productsLastAdded" :key="product._id" >
         <img
           :src="product.photo ? product.photo : '/images/default-image.png'"
           :alt="product.name_pl"
         />
         <h4 class="product-main-header">{{ product.name_pl }}</h4>
-      </a>
+      </router-link>
     </slick>
   </div>
 </template>

@@ -1,7 +1,10 @@
 <template>
-  <b-col  :id="'product-main-info-' + product._id" :md="isShowedDetails ? 12 : 4" :sm="isShowedDetails ? 12 : 6">
+  <b-col
+    :id="'product-main-info-' + product._id"
+    :md="isShowedDetails ? 12 : 4"
+    :sm="isShowedDetails ? 12 : 6"
+  >
     <div
-
       :class="['product-main-info', 'm-2', { 'details-showed': isShowedDetails }]"
       @click="showDetails"
     >
@@ -44,22 +47,25 @@ export default {
   data() {
     return {
       detailsAreLoaded: false,
-      isShowedDetails: false,
       productDetails: {}
     };
   },
+  computed: {
+    isShowedDetails() {
+      return this.$route.params.productId && this.$route.params.productId == this.product._id;
+    }
+  },
   methods: {
     showDetails() {
-      this.isShowedDetails = true;
-      this.loadDetails();
-    },
-    hideDetails() {
-      this.isShowedDetails = false;
+      if (this.$route.params.productId !== this.product._id) {
+        this.$router.push({ name: "product-id", params: { productId: this.product._id } });
+        this.loadDetails();
+      }
     },
     loadDetails: debounce(function() {
       if (this.product) {
         this.detailsAreLoaded = true;
-        this.$emit('scroll-list-to-product', this.product._id)
+        this.$emit("scroll-list-to-product", this.product._id);
         axios
           .get("http://localhost:3000/api/details/" + this.product._id)
           .then(response => {
@@ -71,6 +77,11 @@ export default {
           });
       }
     }, 500)
+  },
+  created() {
+    if (this.isShowedDetails) {
+      this.loadDetails();
+    }
   }
 };
 </script>

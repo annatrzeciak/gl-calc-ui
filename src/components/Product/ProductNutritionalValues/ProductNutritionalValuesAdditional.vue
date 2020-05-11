@@ -407,16 +407,12 @@
         </div>
       </b-col>
     </b-row>
-    <Spinner v-if="detailsAreLoaded" class="mt-4" />
   </b-col>
 </template>
 
 <script>
-import Spinner from "@/components/Utils/Spinner.vue";
-
 export default {
   name: "ProductNutritionalValuesAdditional",
-  components: { Spinner },
   props: {
     productDetails: { type: Object, required: false },
     detailsAreLoaded: { type: Boolean, required: true }

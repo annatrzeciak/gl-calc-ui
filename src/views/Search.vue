@@ -4,7 +4,11 @@
       <h1 class="text-center font-weight-bold">Znajdź interesujący Cię produkt</h1>
       <SearchInput
         :value="searchValue"
-        @filter="$route.params.searchValue !== $event ? $router.push($event) : null"
+        @filter="
+          $route.params.searchValue !== $event
+            ? $router.push({ name: 'search-list', params: { searchValue: $event } })
+            : null
+        "
         :disabled="loading"
       />
       <div v-if="$route.params.searchValue">

@@ -186,7 +186,7 @@
                 <td>Arbuz 100g</td>
                 <td>72</td>
                 <td>8,4g</td>
-                <td>72 x 8,4 / 100 =<br>604,8 / 100 = <strong>6,048</strong></td>
+                <td>72 x 8,4 / 100 =<br />604,8 / 100 = <strong>6,048</strong></td>
               </tr>
             </tbody>
           </table>
@@ -212,11 +212,12 @@
         <p>
           A teraz zapraszam do użycia wyszukiwarki i kalkulatora.
         </p>
-        <a >
+        <router-link :to="{ name: 'search' }">
           <h2 class="text-center font-weight-bold">
             Zobacz, jakie to proste!
-          </h2>
-        </a>
+          </h2></router-link
+        >
+
         <p></p>
       </b-col>
     </b-row>
