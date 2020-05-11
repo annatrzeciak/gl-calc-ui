@@ -62,7 +62,7 @@ export default {
 </script>
 
 <style type="text/scss" lang="scss" scoped>
-@import "./../styles/colors";
+@import "./../../styles/colors";
 
 .loading-container {
   display: flex;

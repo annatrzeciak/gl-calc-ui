@@ -117,7 +117,7 @@ export default {
 </script>
 
 <style lang="scss" type="text/scss" scoped>
-@import "./../styles/colors";
+@import "./../../styles/colors";
 .graph-labels {
   h5 {
     line-height: 19.5px;

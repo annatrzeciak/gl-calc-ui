@@ -14,12 +14,12 @@
           <h4 class="product-main-header">{{ product.name_pl }}</h4>
           <h5>{{ product.name }}/{{ product._id }}</h5>
         </b-col>
-        <ProductMainNutritionalValues
+        <ProductNutritionalValuesMain
           v-if="isShowedDetails"
           :productDetails="productDetails"
           :detailsAreLoaded="detailsAreLoaded"
         />
-        <ProductAdditionalNutritionalValues
+        <ProductNutritionalValuesAdditional
           v-if="isShowedDetails"
           :productDetails="productDetails"
           :detailsAreLoaded="detailsAreLoaded"
@@ -32,12 +32,12 @@
 <script>
 import debounce from "lodash.debounce";
 import axios from "axios";
-import ProductAdditionalNutritionalValues from "@/components/Product/ProductAdditionalNutritionalValues.vue";
-import ProductMainNutritionalValues from "@/components/Product/ProductMainNutritionalValues.vue";
+import ProductNutritionalValuesAdditional from "@/components/Product/ProductNutritionalValues/ProductNutritionalValuesAdditional.vue";
+import ProductNutritionalValuesMain from "@/components/Product/ProductNutritionalValues/ProductNutritionalValuesMain.vue";
 
 export default {
   name: "ProductMain",
-  components: { ProductAdditionalNutritionalValues, ProductMainNutritionalValues },
+  components: { ProductNutritionalValuesAdditional, ProductNutritionalValuesMain },
   props: {
     product: { type: Object, required: true }
   },

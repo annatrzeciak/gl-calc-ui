@@ -7,6 +7,7 @@
       type="search"
       @keyup.enter="$emit('filter', $event.target.value)"
       :disabled="disabled"
+      :value="value"
     />
   </div>
 </template>

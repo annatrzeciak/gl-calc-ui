@@ -1,16 +1,16 @@
 <template>
   <footer>
-    <LastAddedProducts />
+    <ProductsLastAdded />
     <div class="text-center footer-content">Wszelkie prawa zastrzeżone &copy; 2020</div>
   </footer>
 </template>
 
 <script>
-import LastAddedProducts from "@/components/LastAddedProducts.vue";
+import ProductsLastAdded from "@/components/Product/ProductsLastAdded.vue";
 
 export default {
   name: "Footer",
-  components: { LastAddedProducts }
+  components: { ProductsLastAdded }
 };
 </script>
 

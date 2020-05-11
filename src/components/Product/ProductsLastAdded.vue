@@ -2,7 +2,7 @@
   <div class="slick-content text-center">
     <h3 class="font-weight-bold">Ostatnio dodane produkty</h3>
     <slick ref="slick" :options="slickOptions">
-      <a v-for="product in lastAddedProducts" :key="product._id" href="/">
+      <a v-for="product in productsLastAdded" :key="product._id" href="/">
         <img
           :src="product.photo ? product.photo : '/images/default-image.png'"
           :alt="product.name_pl"
@@ -18,13 +18,13 @@ import Slick from "vue-slick";
 import axios from "axios";
 
 export default {
-  name: "LastAddedProducts",
+  name: "ProductsLastAdded",
 
   components: { Slick },
 
   data() {
     return {
-      lastAddedProducts: [],
+      productsLastAdded: [],
       slickOptions: {
         arrows: false,
         slidesToShow: 5,
@@ -61,7 +61,7 @@ export default {
     };
   },
   watch: {
-    lastAddedProducts() {
+    productsLastAdded() {
       let currIndex = this.$refs.slick.currentSlide();
 
       this.$refs.slick.destroy();
@@ -75,7 +75,7 @@ export default {
     axios
       .get("http://localhost:3000/api/products/last-added")
       .then(response => {
-        this.lastAddedProducts = response.data.products;
+        this.productsLastAdded = response.data.products;
       })
       .catch(e => {
         console.error(e);
@@ -95,7 +95,7 @@ export default {
 </script>
 
 <style scoped lang="scss">
-@import "./../styles/colors";
+@import "./../../styles/colors";
 
 .slick-content {
   margin-top: 15vh;

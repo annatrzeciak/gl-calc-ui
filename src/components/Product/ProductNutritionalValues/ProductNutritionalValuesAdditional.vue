@@ -412,10 +412,10 @@
 </template>
 
 <script>
-import Spinner from "@/components/Spinner.vue";
+import Spinner from "@/components/Utils/Spinner.vue";
 
 export default {
-  name: "ProductAdditionalNutritionalValues",
+  name: "ProductNutritionalValuesAdditional",
   components: { Spinner },
   props: {
     productDetails: { type: Object, required: false },
@@ -425,7 +425,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import "./../../styles/colors";
+@import "./../../../styles/colors";
 
 .subdata {
   margin-right: 10px;

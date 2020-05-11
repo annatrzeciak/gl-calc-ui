@@ -165,11 +165,11 @@
 </template>
 
 <script>
-import Spinner from "@/components/Spinner.vue";
-import Graph from "@/components/Graph.vue";
+import Spinner from "@/components/Utils/Spinner.vue";
+import Graph from "@/components/Utils/Graph.vue";
 
 export default {
-  name: "ProductMainNutritionalValues",
+  name: "ProductNutritionalValuesMain",
   components: { Spinner, Graph },
   props: {
     productDetails: { type: Object, required: false },

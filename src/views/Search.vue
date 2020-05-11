@@ -1,53 +1,53 @@
 <template>
-  <div :class="['search-page', { 'has-results': filteredProducts.length }]">
+  <div :class="['search-page', { 'has-results': $route.params.searchValue }]">
     <b-container fluid>
       <h1 class="text-center font-weight-bold">Znajdź interesujący Cię produkt</h1>
       <SearchInput
-        v-if="!loading"
         :value="searchValue"
-        @filter="filterProducts"
+        @filter="$route.params.searchValue !== $event ? $router.push($event) : null"
         :disabled="loading"
       />
-
-      <Spinner v-if="loading" class="mt-4" />
-      <div class="results" v-if="filteredProducts && !loading && step === 1">
-        <p class="text-right">Znaleziono {{ filteredProducts.length }} {{ productsLabel }}</p>
-        <b-row>
-          <ProductMain
-            @scroll-list-to-product="scrollToProduct($event)"
-            v-for="product in filteredProducts"
-            :key="product._id"
-            :product="product"
-          />
-        </b-row>
+      <div v-if="$route.params.searchValue">
+        <Spinner v-if="loading" class="mt-4" />
+        <div class="results" v-if="foundProducts && !loading && step === 1">
+          <p class="text-right">Znaleziono {{ foundProducts.length }} {{ productsLabel }}</p>
+          <b-row>
+            <ProductMain
+              @scroll-list-to-product="scrollToProduct($event)"
+              v-for="product in foundProducts"
+              :key="product._id"
+              :product="product"
+            />
+          </b-row>
+        </div>
       </div>
     </b-container>
   </div>
 </template>
 
 <script>
-import axios from "axios";
 import debounce from "lodash.debounce";
-import SearchInput from "@/components/SearchInput.vue";
+import axios from "axios";
+import SearchInput from "@/components/Utils/SearchInput.vue";
+import Spinner from "@/components/Utils/Spinner.vue";
 import ProductMain from "@/components/Product/ProductMain.vue";
-import Spinner from "@/components/Spinner.vue";
 
 export default {
   name: "Search",
-  components: { Spinner, ProductMain, SearchInput },
+  components: { SearchInput, Spinner, ProductMain },
   data() {
     return {
       loading: false,
       step: 0,
       searchValue: "",
-      filteredProducts: []
+      foundProducts: []
     };
   },
   computed: {
     productsLabel() {
-      if (this.filteredProducts.length === 1) {
+      if (this.foundProducts.length === 1) {
         return "produkt";
-      } else if (1 < this.filteredProducts.length && this.filteredProducts.length < 5) {
+      } else if (1 < this.foundProducts.length && this.foundProducts.length < 5) {
         return "produkty";
       } else {
         return "produktów";
@@ -55,20 +55,10 @@ export default {
     }
   },
   methods: {
-    scrollToMore() {
-      const headerHeight = document.getElementById("header").offsetHeight;
-      window.scrollTo({
-        behavior: "smooth",
-        left: 0,
-        top: headerHeight
-      });
-    },
     scrollToProduct(productId) {
-      console.log(document.getElementById("product-main-info-" + productId).clientTop);
       const productComponent = document.getElementById("product-main-info-" + productId);
       const navbar = document.querySelector("nav");
 
-      console.log(productComponent);
       window.scrollTo({
         behavior: "smooth",
         left: 0,
@@ -81,13 +71,27 @@ export default {
         .get("http://localhost:3000/api/products/search/" + value)
         .then(response => {
           this.loading = false;
-          this.filteredProducts = response.data.products;
+          this.foundProducts = response.data.products;
           this.step = 1;
         })
         .catch(e => {
           console.error(e);
         });
     }, 500)
+  },
+  created() {
+    if (this.$route.params.searchValue) {
+      this.searchValue = this.$route.params.searchValue;
+      this.filterProducts(this.$route.params.searchValue);
+    }
+  },
+  watch: {
+    $route() {
+      if (this.$route.params.searchValue !== this.searchValue) {
+        this.searchValue = this.$route.params.searchValue;
+        this.filterProducts(this.$route.params.searchValue);
+      }
+    }
   }
 };
 </script>
@@ -96,9 +100,6 @@ export default {
   margin-top: 20vh;
   padding: 70px 0 0;
   transition: 0.3s ease-in-out;
-  /*max-width: 100%;*/
-  /*margin: 0;*/
-  /*position: relative;*/
   &.has-results {
     margin-top: 0;
   }

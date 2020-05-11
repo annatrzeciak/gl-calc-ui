@@ -9,18 +9,30 @@ Vue.use(VueRouter);
 const routes = [
   {
     path: "/",
-    name: "Home",
+    name: "home",
     component: Home
   },
   {
     path: "/wiecej",
-    name: "About",
+    name: "about",
     component: About
   },
   {
     path: "/szukaj",
-    name: "Search",
-    component: Search
+    name: "search",
+    component: Search,
+    children: [
+      {
+        path: ":searchValue",
+        name: "search-list",
+        children: [
+          {
+            path: ":productId",
+            name: "product-id",
+          }
+        ]
+      }
+    ]
   }
 ];
 
