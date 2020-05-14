@@ -1,5 +1,12 @@
 <template>
-  <div :class="['calculator', { opened: calculatorIsOpened }]">
+  <div
+    id="calculator"
+    v-click-outside="{
+      exclude: ['calculator'],
+      handler: 'closeCalc'
+    }"
+    :class="['calculator', { opened: calculatorIsOpened }]"
+  >
     <h3 @click="$emit('toggle-calculator')">Kalkulator</h3>
     <div class="calculator-content">
       <div v-if="products.length">
@@ -43,7 +50,11 @@ export default {
     products: { type: Array, default: () => [] },
     calculatorIsOpened: { type: Boolean, default: false }
   },
-
+  methods: {
+    closeCalc() {
+      if (this.calculatorIsOpened) this.$emit("close-calculator");
+    }
+  }
 };
 </script>
 

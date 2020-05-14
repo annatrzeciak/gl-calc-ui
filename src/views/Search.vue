@@ -5,6 +5,7 @@
       :products="productsToCalculate"
       :calculatorIsOpened="calculatorIsOpened"
       @toggle-calculator="calculatorIsOpened = !calculatorIsOpened"
+      @close-calculator="calculatorIsOpened = false"
     />
     <b-container fluid>
       <h1 class="text-center font-weight-bold">Znajdź interesujący Cię produkt</h1>
