@@ -15,13 +15,26 @@
             :alt="product.name_pl"
           />
           <h4 class="product-main-header">{{ product.name_pl }}</h4>
-          <h5>{{ product.name }}/{{ product._id }}</h5>
-          <div v-if="productDetails && productDetails._id === product._id">
-            <input type="number" :value="countValue" @change="countValue = $event.target.value" />g
-            <button @click.stop="addToCalculator" class="btn-blue">
-              Dodaj do kalkulatora
+
+          <b-form
+            class="mb-2"
+            @submit="$event.preventDefault()"
+            inline
+            v-if="productDetails && productDetails._id === product._id"
+          >
+            <b-input
+              type="number"
+              id="inline-form-input-name"
+              class="col-3 offset-3 mr-2 text-right"
+              placeholder="Podaj wagę"
+              :value="countValue"
+              @change="countValue = $event.target.value"
+            />
+            <label class="mr-3" for="inline-form-input-name">g</label>
+            <button @click.stop="addToCalculator" class="btn btn-blue no-shadow border-1">
+              Dodaj
             </button>
-          </div>
+          </b-form>
         </b-col>
         <ProductNutritionalValuesMain
           v-if="isShowedDetails"

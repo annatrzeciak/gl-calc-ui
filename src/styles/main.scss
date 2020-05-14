@@ -59,6 +59,7 @@ a {
   }
 }
 
+
 .btn {
   border-radius: 0;
   border-width: 2px;
@@ -69,7 +70,7 @@ a {
     border-color: $blue;
     color: $white;
     transition: 0.2s;
-
+font-weight: bold;
     &:hover {
       background: transparent;
       color: $blue;
@@ -111,4 +112,14 @@ a {
 
 .smaller-text {
   font-size: 12px;
+}
+
+input, button{
+  border-radius: 0 !important;
+}
+.no-shadow{
+  box-shadow: none;
+}
+.border-1{
+  border-width: 1px;
 }
