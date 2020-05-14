@@ -1,13 +1,17 @@
 @import url("https://fonts.googleapis.com/css?family=Montserrat:300,400,600,800&display=swap");
 @import "colors";
+@import "icons";
+
 * {
   box-sizing: border-box;
 }
+
 html {
   width: 100vw;
   height: 100vh;
   margin: 0;
 }
+
 body {
   overflow-x: hidden;
   font-family: "Montserrat", sans-serif !important;
@@ -16,69 +20,95 @@ body {
   min-height: 100vh;
 }
 
-#app{
+#app {
   min-height: 100vh;
   display: flex;
   flex-direction: column;
 }
-.dark-blue-text{
+
+.dark-blue-text {
   color: $darkBlue;
 }
-.blue-text{
+
+.blue-text {
   color: $blue;
 }
-.turquoise-text{
+
+.turquoise-text {
   color: $turquoise;
 
 }
-.orange-text{
+
+.orange-text {
   color: $orange;
 }
-.grey-text{
+
+.grey-text {
   color: $grey;
 }
-.light-grey-text{
+
+.light-grey-text {
   color: $lightGrey;
 }
 
-a{
+a {
   color: $darkBlue;
-  &:hover{
+
+  &:hover {
     color: $darkBlue;
   }
 }
-.btn{
+
+.btn {
   border-radius: 0;
   border-width: 2px;
 
-  &-more{
+  &-blue {
+    background: $blue;
+    box-shadow: 0 2px 7px rgba(0, 0, 0, 0.5);
+    border-color: $blue;
+    color: $white;
+    transition: 0.2s;
+
+    &:hover {
+      background: transparent;
+      color: $blue;
+
+    }
+  }
+
+  &-more {
     background: transparent;
     border-color: $white;
     font-weight: 600;
     font-size: 20px;
     padding: 10px;
-    text-shadow: 0 2px 4px rgba(0,0,0,0.5);
-    box-shadow: 0 2px 7px rgba(0,0,0,0.5);
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+    box-shadow: 0 2px 7px rgba(0, 0, 0, 0.5);
     transition: 0.2s;
-    &:hover{
+
+    &:hover {
       background: $darkBlue;
       border-color: $white;
     }
-    &:active, &:focus{
+
+    &:active, &:focus {
       background: $darkBlue !important;
       border-color: $white !important;
     }
-    &:active{
+
+    &:active {
       transform: scale(0.9);
 
     }
   }
 }
 
-.text-shadow{
-  text-shadow: 0 2px 4px rgba(0,0,0,0.5);
+.text-shadow {
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
 
 }
+
 .smaller-text {
   font-size: 12px;
 }

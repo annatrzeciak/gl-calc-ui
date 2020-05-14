@@ -1,5 +1,11 @@
 <template>
   <div :class="['search-page', { 'has-results': $route.params.searchValue }]">
+    <Calculator
+      @remove-product="removeProductFromCalc"
+      :products="productsToCalculate"
+      :calculatorIsOpened="calculatorIsOpened"
+      @toggle-calculator="calculatorIsOpened = !calculatorIsOpened"
+    />
     <b-container fluid>
       <h1 class="text-center font-weight-bold">Znajdź interesujący Cię produkt</h1>
       <SearchInput
@@ -21,6 +27,7 @@
               v-for="product in foundProducts"
               :key="product._id"
               :product="product"
+              @add-to-calc="addToCalc"
             />
           </b-row>
         </div>
@@ -35,16 +42,19 @@ import axios from "axios";
 import SearchInput from "@/components/Utils/SearchInput.vue";
 import Spinner from "@/components/Utils/Spinner.vue";
 import ProductMain from "@/components/Product/ProductMain.vue";
+import Calculator from "@/components/Calculator/Calculator.vue";
 
 export default {
   name: "Search",
-  components: { SearchInput, Spinner, ProductMain },
+  components: { SearchInput, Spinner, ProductMain, Calculator },
   data() {
     return {
       loading: false,
       step: 0,
       searchValue: "",
-      foundProducts: []
+      foundProducts: [],
+      productsToCalculate: [],
+      calculatorIsOpened: false
     };
   },
   computed: {
@@ -81,7 +91,23 @@ export default {
         .catch(e => {
           console.error(e);
         });
-    }, 500)
+    }, 500),
+    addToCalc(product) {
+      this.calculatorIsOpened = true;
+      const productInCalc = this.productsToCalculate.find(
+        productInCalc => productInCalc.id == product.id
+      );
+      if (productInCalc) {
+        productInCalc.count += product.count;
+      } else {
+        this.productsToCalculate.push(product);
+      }
+    },
+    removeProductFromCalc(productId) {
+      this.productsToCalculate = this.productsToCalculate.filter(
+        product => product.id !== productId
+      );
+    }
   },
   created() {
     if (this.$route.params.searchValue) {

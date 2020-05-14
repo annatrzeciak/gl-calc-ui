@@ -395,7 +395,11 @@
         <div class="d-flex justify-content-between" v-if="productDetails.gi">
           <div>Ładunek glikochemiczny</div>
           <div>
-            {{ Math.round(productDetails.gi.val * productDetails.carbohydrate.val) / 100 }}
+            {{
+              Math.round(
+                productDetails.gi.val * Math.abs(productDetails.carbohydrate.val - productDetails.fibre.val)
+              ) / 100
+            }}
           </div>
         </div>
         <div class="d-flex justify-content-between" v-if="productDetails.caffeine">

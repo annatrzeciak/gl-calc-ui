@@ -16,6 +16,12 @@
           />
           <h4 class="product-main-header">{{ product.name_pl }}</h4>
           <h5>{{ product.name }}/{{ product._id }}</h5>
+          <div v-if="productDetails && productDetails._id === product._id">
+            <input type="number" :value="countValue" @change="countValue = $event.target.value" />g
+            <button @click.stop="addToCalculator" class="btn-blue">
+              Dodaj do kalkulatora
+            </button>
+          </div>
         </b-col>
         <ProductNutritionalValuesMain
           v-if="isShowedDetails"
@@ -47,7 +53,8 @@ export default {
   data() {
     return {
       detailsAreLoaded: false,
-      productDetails: {}
+      productDetails: {},
+      countValue: 100
     };
   },
   computed: {
@@ -57,7 +64,7 @@ export default {
   },
   methods: {
     showDetails() {
-      if (this.$route.params.productId !== this.product._id) {
+      if (!this.isShowedDetails && this.$route.params.productId !== this.product._id) {
         this.$router.push({ name: "product-id", params: { productId: this.product._id } });
         this.loadDetails();
       }
@@ -76,7 +83,15 @@ export default {
             console.error(e);
           });
       }
-    }, 500)
+    }, 500),
+    addToCalculator() {
+      this.$emit("add-to-calc", {
+        id: this.product._id,
+        main: this.product,
+        details: this.productDetails,
+        count: Number(this.countValue)
+      });
+    }
   },
   created() {
     if (this.isShowedDetails) {

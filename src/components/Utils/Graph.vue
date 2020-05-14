@@ -14,6 +14,7 @@ export default {
   name: "Graph",
   props: {
     carbs: { type: Number, required: false },
+    fibre: { type: Number, required: false },
     fat: { type: Number, required: false },
     protein: { type: Number, required: false },
     kcal: { type: Number, required: false },
@@ -104,7 +105,7 @@ export default {
       }
     },
     LG() {
-      return this.GI ? (this.GI * this.carbs) / 100 : 0;
+      return this.GI ? (this.GI * Math.abs(this.carbs - this.fibre)) / 100 : 0;
     }
   },
   methods: {

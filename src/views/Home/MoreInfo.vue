@@ -84,7 +84,7 @@
           </table>
         </b-col>
         <p>
-          Zatem mamy 27,2g węglowodanów przyswajalnych w naszym 200g posiłku. Kolejnym krokiem jes
+          Zatem mamy 27,2g węglowodanów przyswajalnych w naszym 200g posiłku. Kolejnym krokiem jest
           obliczenie procentowego udziału węglowodanów z każdego składnika.
         </p>
         <p class="text-center">
@@ -139,10 +139,9 @@
         </p>
         <h3 class="text-center font-weight-bold my-5">Ładunek glikochemiczny</h3>
         <p>
-          Indeks glikochemiczny niestety nie bierze pod uwagę całej złożoności, w jakiej węglowodany
-          wpływają na stężenie glukozy po posiłku. Naszczęście jest parametr, który uwzględnia IG
-          oraz zawartość węglowodanów w zjadanej porcji. Jest to
-          <strong>ładunek glikochemiczny</strong>.
+          <strong>Ładunek glikochemiczny</strong> to miara zarówno ilości jak i jakości
+          węglowodanów. Głównne założenie to: produkty o wysokim IG spożywane w małych ilościach
+          powodują taki sam wyrzut insuliny jak produkt o niskim IG spożywany w dużej ilości
         </p>
         <p>
           Wartości ładunku glikochemicznego dzielimy na:
@@ -165,9 +164,11 @@
           Dobowy niski ładunek glikochemiczny wynosi w przybliżeniu &lt; 80, a wysoki &#8805; 120
         </p>
         <h3 class="text-center font-weight-bold my-5">Jak obliczyć ładunek glikochemiczny?</h3>
-        <p>Wzór: <strong>ŁG = IG x zawartość węglowodanów w porcji (g) / 100</strong></p>
         <p>
-          Obliczymy ŁG dla 100g arbuza.
+          Wzór: <strong>ŁG = IG x zawartość węglowodanów przyswajalnych w porcji (g) / 100</strong>
+        </p>
+        <p>
+          Obliczymy ŁG dla 100g gotowanej marchewki.
         </p>
         <b-col md="8" offset-md="2" class="text-center my-2">
           <table class="table-bordered text-center w-100">
@@ -176,25 +177,25 @@
                 <th style="width: calc(200% / 7)" class="flex">Składnik</th>
                 <th style="width: calc(100% / 7)">IG</th>
                 <th style="width: calc(200% / 7)">
-                  zawartość węglowodanów
+                  zawartość węglowodanów przyswajalnych
                 </th>
                 <th style="width: calc(200% / 7)">ŁG</th>
               </tr>
             </thead>
             <tbody>
               <tr>
-                <td>Arbuz 100g</td>
-                <td>72</td>
-                <td>8,4g</td>
-                <td>72 x 8,4 / 100 =<br />604,8 / 100 = <strong>6,048</strong></td>
+                <td>Gotowana marchewka 100g</td>
+                <td>80</td>
+                <td>8,7g (węglowodany ogólem)<br />- 3,6g (błonnik) =<br />5,1g</td>
+                <td>80 x 5,1 / 100 =<br />408 / 100 = <strong>4,08</strong></td>
               </tr>
             </tbody>
           </table>
         </b-col>
         <p>
-          IG arbuza jest wysokie, jednak po oblczeniu ładunku widzimy, że spożycie 100g arbuza nie
-          spowoduje szybkiego wzrostu poposiłkowego stężenia glukozy. Jest to idelany przykłąd
-          ukazujacy niedokonałość indeksu glikochemicznego.
+          IG gotowanej marchewnki jest wysokie (80), jednak po obliczeniu ładunku widzimy, że
+          spożycie 100g nie spowoduje szybkiego wzrostu poposiłkowego stężenia glukozy. Jest to
+          idealany przykład ukazujacy niedokonałość indeksu glikochemicznego.
         </p>
         <p>Wielu dietetyków wskazuje, że</p>
         <h2 class="text-center font-weight-bold">

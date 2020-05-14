@@ -1,0 +1,15 @@
+@import "colors";
+i.icon{
+  position: relative;
+  width: 18px;
+  height: 18px;
+  display: block;
+  opacity: 0.7;
+  cursor: pointer;
+  &:hover{
+    opacity: 1;
+  }
+  &.icon-delete{
+    content: url("/icons/icon-delete.svg");
+  }
+}

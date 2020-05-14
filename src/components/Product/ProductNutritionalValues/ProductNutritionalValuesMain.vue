@@ -154,13 +154,15 @@
         <Graph
           v-if="!detailsAreLoaded"
           :carbs="productDetails.carbohydrate ? productDetails.carbohydrate.val : 0"
+          :fibre="productDetails.fibre ? productDetails.fibre.val : 0"
           :protein="productDetails.protein ? productDetails.protein.val : 0"
           :fat="productDetails.fat ? productDetails.fat.val : 0"
           :kcal="productDetails.energyKcal ? productDetails.energyKcal.val : 0"
           :kJ="productDetails.energyKj ? productDetails.energyKj.val : 0"
           :GI="productDetails.gi ? productDetails.gi.val : 0"
-        /> </b-col
-    ></b-row>
+        />
+      </b-col>
+    </b-row>
   </b-col>
 </template>
 
