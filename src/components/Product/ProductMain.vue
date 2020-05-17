@@ -87,7 +87,7 @@ export default {
         this.detailsAreLoaded = true;
         this.$emit("scroll-list-to-product", this.product._id);
         axios
-          .get("http://localhost:3000/api/details/" + this.product._id)
+          .get(`http://${process.env.VUE_APP_API_HOST}:3000/api/details/` + this.product._id)
           .then(response => {
             this.detailsAreLoaded = false;
             this.productDetails = response.data.details;

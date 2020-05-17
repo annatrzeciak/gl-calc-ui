@@ -83,7 +83,7 @@ export default {
     filterProducts: debounce(function(value) {
       this.loading = true;
       axios
-        .get("http://localhost:3000/api/products/search/" + value)
+        .get(`http://${process.env.VUE_APP_API_HOST}:3000/api/products/search/` + value)
         .then(response => {
           this.loading = false;
           this.foundProducts = response.data.products;

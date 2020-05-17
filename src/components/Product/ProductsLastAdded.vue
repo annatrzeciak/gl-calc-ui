@@ -76,7 +76,7 @@ export default {
   },
   created() {
     axios
-      .get("http://localhost:3000/api/products/last-added")
+      .get(`http://${process.env.VUE_APP_API_HOST}:3000/api/products/last-added`)
       .then(response => {
         this.productsLastAdded = response.data.products;
       })
