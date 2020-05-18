@@ -7,6 +7,7 @@
       <b-navbar-nav class="ml-auto">
         <router-link to="/szukaj">szukaj</router-link>
         <router-link to="/wiecej">o stronie</router-link>
+        <router-link to="/zaloguj">zaloguj</router-link>
       </b-navbar-nav>
     </b-collapse>
   </b-navbar>
@@ -49,7 +50,7 @@ nav {
     padding: 3px 5px;
 
 
-    &:hover {
+    &:hover, &.router-link-active {
       opacity: 1;
       border-bottom: 2px solid $darkBlue;
     }

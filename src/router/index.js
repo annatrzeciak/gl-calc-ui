@@ -3,6 +3,7 @@ import VueRouter from "vue-router";
 import Home from "@/views/Home.vue";
 import About from "@/views/About.vue";
 import Search from "@/views/Search.vue";
+import Login from "@/views/Login.vue";
 
 Vue.use(VueRouter);
 
@@ -33,7 +34,12 @@ const routes = [
         ]
       }
     ]
-  }
+  },
+  {
+    path: "/zaloguj",
+    name: "login",
+    component: Login
+  },
 ];
 
 const router = new VueRouter({
