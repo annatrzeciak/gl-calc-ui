@@ -1,9 +1,14 @@
 import Vue from "vue";
 import VueRouter from "vue-router";
+
+import auth from "@/middleware/auth";
+import noAuth from "@/middleware/noAuth";
+
 import Home from "@/views/Home.vue";
 import About from "@/views/About.vue";
 import Search from "@/views/Search.vue";
 import Login from "@/views/Login.vue";
+import Account from "@/views/Account.vue";
 
 Vue.use(VueRouter);
 
@@ -22,6 +27,7 @@ const routes = [
     path: "/szukaj",
     name: "search",
     component: Search,
+
     children: [
       {
         path: ":searchValue",
@@ -29,7 +35,7 @@ const routes = [
         children: [
           {
             path: ":productId",
-            name: "product-id",
+            name: "product-id"
           }
         ]
       }
@@ -38,8 +44,15 @@ const routes = [
   {
     path: "/zaloguj",
     name: "login",
-    component: Login
+    component: Login,
+    beforeEnter: noAuth
   },
+  {
+    path: "/konto",
+    name: "account",
+    component: Account,
+    beforeEnter: auth
+  }
 ];
 
 const router = new VueRouter({

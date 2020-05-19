@@ -75,6 +75,7 @@ export default {
     }
   },
   created() {
+    console.log(process.env.VUE_APP_API_HOST)
     axios
       .get(`http://${process.env.VUE_APP_API_HOST}:3000/api/products/last-added`)
       .then(response => {

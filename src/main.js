@@ -7,6 +7,7 @@ import Vue from "vue";
 import { BootstrapVue, IconsPlugin } from "bootstrap-vue";
 import App from "./App.vue";
 import ClickOutside from "@/directives/ClickOutside";
+import store from "./store/store";
 
 import router from "./router";
 
@@ -18,6 +19,7 @@ Vue.directive("click-outside", ClickOutside);
 
 new Vue({
   router,
+  store,
   render(h) {
     return h(App);
   }

@@ -7,13 +7,17 @@
       <b-navbar-nav class="ml-auto">
         <router-link to="/szukaj">szukaj</router-link>
         <router-link to="/wiecej">o stronie</router-link>
-        <router-link to="/zaloguj">zaloguj</router-link>
+        <router-link to="/zaloguj" v-if="!isLogged">zaloguj</router-link>
+        <router-link to="/konto" v-if="isLogged">konto</router-link>
+        <a v-if="isLogged" @click="logoutUser">wyloguj</a>
       </b-navbar-nav>
     </b-collapse>
   </b-navbar>
 </template>
 
 <script>
+import { mapGetters, mapActions } from "vuex";
+
 export default {
   name: "Navbar",
   props: { dark: { type: Boolean } },
@@ -21,6 +25,12 @@ export default {
     return {
       isDark: true
     };
+  },
+  computed: {
+    ...mapGetters("auth", ["isLogged"])
+  },
+  methods: {
+    ...mapActions("auth", ["logoutUser"])
   }
 };
 </script>
@@ -49,8 +59,8 @@ nav {
     border-bottom: 2px solid transparent;
     padding: 3px 5px;
 
-
-    &:hover, &.router-link-active {
+    &:hover,
+    &.router-link-active {
       opacity: 1;
       border-bottom: 2px solid $darkBlue;
     }
