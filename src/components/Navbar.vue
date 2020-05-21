@@ -8,7 +8,7 @@
         <router-link to="/szukaj">szukaj</router-link>
         <router-link to="/wiecej">o stronie</router-link>
         <router-link to="/zaloguj" v-if="!isLogged">zaloguj</router-link>
-        <router-link to="/konto" v-if="isLogged">konto</router-link>
+        <router-link to="/konto" v-if="isLogged">{{loggedUserEmail? loggedUserEmail : 'konto'}}</router-link>
         <a v-if="isLogged" @click="logoutUser">wyloguj</a>
       </b-navbar-nav>
     </b-collapse>
@@ -23,14 +23,15 @@ export default {
   props: { dark: { type: Boolean } },
   data() {
     return {
-      isDark: true
+      isDark: true,
     };
   },
   computed: {
-    ...mapGetters("auth", ["isLogged"])
+    ...mapGetters("auth", ["isLogged", "loggedUserEmail"])
   },
   methods: {
     ...mapActions("auth", ["logoutUser"])
+
   }
 };
 </script>

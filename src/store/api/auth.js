@@ -1,4 +1,4 @@
-import { api } from "./apiHost";
+import { api, authenticationHeader } from "./apiHost";
 
 import jwtDecode from "jwt-decode";
 
@@ -52,5 +52,9 @@ export async function loginInTheApplication(login, password) {
 }
 
 export async function refreshToken(refreshToken) {
-  return await api.post(`/refresh`, { refreshToken: `Bearer ${refreshToken}` });
+  return await api.post(`/users/refresh`, { refreshToken: `Bearer ${refreshToken}` });
+}
+
+export async function getUserDetails(email) {
+  return await api.post(`/users/details`, { email: email }, { headers: authenticationHeader() });
 }

@@ -6,21 +6,25 @@ export const constans = {
   SET_AUTHENTICATED: "SET_AUTHENTICATED",
   SET_AUTH_USER: "SET_AUTH_USER",
   SET_ID_REPRESENTING_TOKEN_REFRESH_COUNTER: "SET_ID_REPRESENTING_TOKEN_REFRESH_COUNTER",
-  SET_USERS_LIST: "SET_USERS_LIST"
+  SET_USER_EMAIL: "SET_USER_EMAIL",
+  SET_USER_DETAILS: "SET_USER_DETAILS"
 };
 
 export default {
   namespaced: true,
   state: {
     isAuthorized: false,
+    authorizedUserEmail: "",
     tokenRefreshCounterId: null,
     auth: {},
     account: {
-      users: []
+      user: {}
     }
   },
   getters: {
-    isLogged: state => state.isAuthorized
+    isLogged: state => state.isAuthorized,
+    userDetails: state => state.account && state.account.user,
+    loggedUserEmail: state => state.authorizedUserEmail
   },
   mutations: {
     [constans.SET_AUTH_USER](state, tokens) {
@@ -40,8 +44,12 @@ export default {
     [constans.SET_ID_REPRESENTING_TOKEN_REFRESH_COUNTER](state, payload) {
       state.tokenRefreshCounterId = payload;
     },
-    [constans.SET_USERS_LIST](state, payload) {
-      Vue.set(state.account, "users", payload.users);
+
+    [constans.SET_USER_DETAILS](state, payload) {
+      Vue.set(state.account, "user", payload.user);
+    },
+    [constans.SET_USER_EMAIL](state, email) {
+      state.authorizedUserEmail = email;
     }
   },
   actions: {
@@ -74,12 +82,13 @@ export default {
       });
     },
 
-    async authorize({ commit, dispatch }, tokens) {
-      const accessTokenValid = Auth.checkTokenValidity(tokens && tokens.accessToken);
+    async authorize({ commit, dispatch }, data) {
+      const accessTokenValid = Auth.checkTokenValidity(data.tokens && data.tokens.accessToken);
       commit(constans.SET_AUTHENTICATED, accessTokenValid);
       if (accessTokenValid) {
-        commit(constans.SET_AUTH_USER, tokens);
-        await Auth.setLocalStorageTokens(tokens);
+        commit(constans.SET_AUTH_USER, data.tokens);
+        commit(constans.SET_USER_EMAIL, data.user);
+        await Auth.setLocalStorageTokens(data.tokens);
       }
       return dispatch("refreshToken");
     },
@@ -95,6 +104,15 @@ export default {
       commit(constans.SET_AUTH_USER, null);
       commit(constans.SET_AUTHENTICATED, false);
       router.push({ name: "login" });
+    },
+
+    async fetchUserDetails({ commit, state }) {
+      return Auth.getUserDetails(state.authorizedUserEmail)
+        .then(success => {
+          commit(constans.SET_USER_DETAILS, success.data);
+          return Promise.resolve(success.data);
+        })
+        .catch(err => Promise.reject(err));
     }
   }
 };
