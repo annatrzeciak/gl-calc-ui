@@ -113,6 +113,14 @@ export default {
           return Promise.resolve(success.data);
         })
         .catch(err => Promise.reject(err));
+    },
+
+    async registerUser(ctx, data) {
+      return Auth.registerUsers(data)
+        .then(response => {
+          return Promise.resolve(response);
+        })
+        .catch(err => Promise.reject(err));
     }
   }
 };

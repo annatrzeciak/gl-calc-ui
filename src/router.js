@@ -9,6 +9,7 @@ import About from "@/views/About.vue";
 import Search from "@/views/Search.vue";
 import Login from "@/views/Login.vue";
 import Account from "@/views/Account.vue";
+import NewAccount from "./views/NewAccount";
 
 Vue.use(VueRouter);
 
@@ -45,6 +46,12 @@ const routes = [
     path: "/zaloguj",
     name: "login",
     component: Login,
+    beforeEnter: noAuth
+  },
+  {
+    path: "/rejestracja",
+    name: "new-account",
+    component: NewAccount,
     beforeEnter: noAuth
   },
   {

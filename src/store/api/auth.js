@@ -58,3 +58,7 @@ export async function refreshToken(refreshToken) {
 export async function getUserDetails(email) {
   return await api.post(`/users/details`, { email: email }, { headers: authenticationHeader() });
 }
+
+export async function registerUsers(data) {
+  return await api.post(`/users/register`, data);
+}

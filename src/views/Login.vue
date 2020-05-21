@@ -1,5 +1,6 @@
 <template>
   <b-col class="login-form mt-56" xl="2" offset-xl="5" md="4" offset-md="4" sm="6" offset-sm="3">
+    <h1 class="text-center">Zaloguj</h1>
     <b-form ref="loginForm" @submit.prevent="login" v-if="show">
       <b-form-group id="input-group-email" label="Email:" label-for="input-email">
         <b-form-input
@@ -20,7 +21,7 @@
           placeholder="Wprowadź hasło"
         ></b-form-input>
       </b-form-group>
-
+      <p>Nie masz konta? <router-link to="/rejestracja">Załóż je</router-link></p>
       <b-button :disabled="!form.email || !form.password" variant="primary" type="submit" class=""
         >Zaloguj</b-button
       >

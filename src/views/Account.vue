@@ -1,6 +1,6 @@
 <template>
   <b-container class="mt-56">
-    <h1>Konto</h1>
+    <h1 class="text-center">Konto</h1>
     <div class="details">
       <div><strong>Imię i nazwisko / login: </strong>{{ this.userDetails.name }}</div>
       <div><strong>Email: </strong>{{ this.userDetails.email }}</div>

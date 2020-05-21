@@ -101,7 +101,7 @@ export default {
 @import "./../../styles/colors";
 
 .slick-content {
-  margin-top: 15vh;
+  margin-top: 10vh;
   a {
     height: 180px;
     position: relative;
