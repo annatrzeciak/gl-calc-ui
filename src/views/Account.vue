@@ -2,9 +2,9 @@
   <b-container class="mt-56">
     <h1 class="text-center">Konto</h1>
     <div class="details">
-      <div><strong>Imię i nazwisko / login: </strong>{{ this.userDetails.name }}</div>
-      <div><strong>Email: </strong>{{ this.userDetails.email }}</div>
-      <div><strong>Rola: </strong>{{ this.userDetails.role }}</div>
+      <div><strong>Imię i nazwisko / login: </strong>{{ userDetails.name }}</div>
+      <div><strong>Email: </strong>{{ userDetails.email }} {{userDetails.emailConfirmed ? 'potwierdzony': 'potwierdź email'}}</div>
+      <div><strong>Rola: </strong>{{ userDetails.role }}</div>
     </div>
   </b-container>
 </template>

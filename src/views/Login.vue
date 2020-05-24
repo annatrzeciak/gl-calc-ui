@@ -21,6 +21,7 @@
           placeholder="Wprowadź hasło"
         ></b-form-input>
       </b-form-group>
+      <!-- TODO: Add error message-->
       <p>Nie masz konta? <router-link to="/rejestracja">Załóż je</router-link></p>
       <b-button :disabled="!form.email || !form.password" variant="primary" type="submit" class=""
         >Zaloguj</b-button
@@ -47,6 +48,7 @@ export default {
   methods: {
     ...mapActions("auth", ["authenticationUser"]),
     login() {
+      // TODO: Add validation
       if (this.form.email && this.form.password) {
         this.authenticationUser({
           email: this.form.email,
