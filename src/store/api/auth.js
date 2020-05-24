@@ -1,20 +1,22 @@
 import { api, authenticationHeader } from "./apiHost";
-
 import jwtDecode from "jwt-decode";
-
 import { isValid, toDate, isBefore, differenceInMilliseconds, fromUnixTime } from "date-fns";
+import store from "../store";
 
 export const getAccessToken = () => localStorage.getItem("accessToken");
 export const getRefreshToken = () => localStorage.getItem("refreshToken");
+export const getAuthUserEmail = () => localStorage.getItem("authUserEmail");
 
 export function setLocalStorageTokens(tokens) {
   if (tokens.accessToken) localStorage.setItem("accessToken", tokens.accessToken);
   if (tokens.refreshToken) localStorage.setItem("refreshToken", tokens.refreshToken);
+  if (tokens.user) localStorage.setItem("authUserEmail", tokens.user);
 }
 
 export function removeLocalStorageTokens() {
   localStorage.removeItem("accessToken");
   localStorage.removeItem("refreshToken");
+  localStorage.removeItem("authUserEmail");
 }
 
 export function decodeJWT(token) {
@@ -44,6 +46,27 @@ export function checkTokenValidity(token) {
 
 export function isValidAccessToken() {
   return checkTokenValidity(getAccessToken());
+}
+export async function initializationUserAuthentication() {
+  if (checkTokenValidity(getAccessToken())) {
+    const data = {
+      accessToken: getAccessToken(),
+      refreshToken: getRefreshToken(),
+      user : getAuthUserEmail()
+    };
+    return await store.dispatch("auth/authorize", data);
+  } else {
+    if (checkTokenValidity(getRefreshToken())) {
+      return await store
+        .dispatch("auth/refreshToken")
+        .then(() => {
+          return Promise.resolve();
+        })
+        .catch(e => {
+          return Promise.reject(e);
+        });
+    }
+  }
 }
 
 // ENDPOINTS

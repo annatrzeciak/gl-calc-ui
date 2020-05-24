@@ -29,6 +29,7 @@ export default {
   mutations: {
     [constans.SET_AUTH_USER](state, tokens) {
       const decodeAccessToken = Auth.decodeJWT(tokens && tokens.accessToken);
+      console.log(decodeAccessToken)
       state.auth = {
         accessToken: (tokens && tokens.accessToken) || "",
         refreshToken: (tokens && tokens.refreshToken) || "",
@@ -42,6 +43,7 @@ export default {
       state.isAuthorized = isAuth;
     },
     [constans.SET_ID_REPRESENTING_TOKEN_REFRESH_COUNTER](state, payload) {
+      console.log(payload)
       state.tokenRefreshCounterId = payload;
     },
 
@@ -56,6 +58,7 @@ export default {
     getNewRefreshToken({ dispatch }) {
       new Promise(resolve => {
         return Auth.refreshToken(Auth.getRefreshToken()).then(async response => {
+          console.log(response)
           await dispatch("authorize", response.data);
           return resolve();
         });
@@ -66,6 +69,7 @@ export default {
       const renewalTimeBuffer = 2000;
       const timeDiff = Auth.getTimeDiff(state && state.auth && state.auth.exp);
       let timeoutCount = renewalTimeBuffer < timeDiff ? timeDiff - renewalTimeBuffer : timeDiff;
+      console.log(timeDiff)
       if (timeoutCount) {
         const renewalTimeout = setTimeout(() => {
           dispatch("getNewRefreshToken");
@@ -83,12 +87,12 @@ export default {
     },
 
     async authorize({ commit, dispatch }, data) {
-      const accessTokenValid = Auth.checkTokenValidity(data.tokens && data.tokens.accessToken);
+      const accessTokenValid = Auth.checkTokenValidity(data && data.accessToken);
       commit(constans.SET_AUTHENTICATED, accessTokenValid);
+      commit(constans.SET_USER_EMAIL, data.user);
       if (accessTokenValid) {
-        commit(constans.SET_AUTH_USER, data.tokens);
-        commit(constans.SET_USER_EMAIL, data.user);
-        await Auth.setLocalStorageTokens(data.tokens);
+        commit(constans.SET_AUTH_USER, data);
+        await Auth.setLocalStorageTokens(data);
       }
       return dispatch("refreshToken");
     },
@@ -103,6 +107,7 @@ export default {
       Auth.removeLocalStorageTokens();
       commit(constans.SET_AUTH_USER, null);
       commit(constans.SET_AUTHENTICATED, false);
+      commit(constans.SET_USER_EMAIL, null);
       router.push({ name: "login" });
     },
 

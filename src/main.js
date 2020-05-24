@@ -13,6 +13,7 @@ import ClickOutside from "@/directives/ClickOutside";
 import store from "./store/store";
 
 import router from "./router";
+import { initializationUserAuthentication } from "./store/api/auth";
 
 Vue.use(Vuelidate);
 Vue.use(BootstrapVue);
@@ -27,10 +28,15 @@ Vue.use(Toasted, {
 Vue.config.productionTip = false;
 Vue.directive("click-outside", ClickOutside);
 
-new Vue({
-  router,
-  store,
-  render(h) {
-    return h(App);
-  }
-}).$mount("#app");
+const initAuth = async () => {
+  await initializationUserAuthentication();
+  new Vue({
+    router,
+    store,
+    render(h) {
+      return h(App);
+    }
+  }).$mount("#app");
+};
+
+initAuth();
