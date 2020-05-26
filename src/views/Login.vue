@@ -1,5 +1,5 @@
 <template>
-  <b-col class="login-form mt-56" xl="2" offset-xl="5" md="4" offset-md="4" sm="6" offset-sm="3">
+  <b-col class="login-form mt-56" xl="4" offset-xl="4" md="6" offset-md="3" sm="8" offset-sm="2">
     <h1 class="text-center">Zaloguj</h1>
     <b-form ref="loginForm" @submit.prevent="login" v-if="show">
       <b-form-group id="input-group-email" label="Email:" label-for="input-email">
@@ -21,7 +21,9 @@
           placeholder="Wprowadź hasło"
         ></b-form-input>
       </b-form-group>
-      <!-- TODO: Add error message-->
+      <b-alert class="mt-4" show v-if="errorMessage" variant="danger">
+        {{ errorMessage }}
+      </b-alert>
       <p>Nie masz konta? <router-link to="/rejestracja">Załóż je</router-link></p>
       <b-button :disabled="!form.email || !form.password" variant="primary" type="submit" class=""
         >Zaloguj</b-button
@@ -42,12 +44,14 @@ export default {
         password: ""
       },
 
+      errorMessage: "",
       show: true
     };
   },
   methods: {
     ...mapActions("auth", ["authenticationUser"]),
     login() {
+      this.errorMessage = "";
       // TODO: Add validation
       if (this.form.email && this.form.password) {
         this.authenticationUser({
@@ -58,7 +62,7 @@ export default {
             this.$router.push({ name: "account" });
           })
           .catch(e => {
-            console.error(e);
+            this.errorMessage = e.body.message;
           });
       }
     }

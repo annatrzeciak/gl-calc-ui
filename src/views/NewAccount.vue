@@ -1,5 +1,5 @@
 <template>
-  <b-col class="login-form mt-56" xl="2" offset-xl="5" md="4" offset-md="4" sm="6" offset-sm="3">
+  <b-col class="login-form mt-56" xl="4" offset-xl="4" md="6" offset-md="3" sm="8" offset-sm="2">
     <h1 class="text-center">Rejestracja</h1>
     <b-form :novalidate="true" ref="registerForm" @submit.prevent="registerNewUser">
       <b-form-group id="input-group-name" label="Imię i nazwisko:" label-for="input-name">

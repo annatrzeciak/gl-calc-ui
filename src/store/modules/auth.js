@@ -29,7 +29,6 @@ export default {
   mutations: {
     [constans.SET_AUTH_USER](state, tokens) {
       const decodeAccessToken = Auth.decodeJWT(tokens && tokens.accessToken);
-      console.log(decodeAccessToken)
       state.auth = {
         accessToken: (tokens && tokens.accessToken) || "",
         refreshToken: (tokens && tokens.refreshToken) || "",
@@ -43,7 +42,6 @@ export default {
       state.isAuthorized = isAuth;
     },
     [constans.SET_ID_REPRESENTING_TOKEN_REFRESH_COUNTER](state, payload) {
-      console.log(payload)
       state.tokenRefreshCounterId = payload;
     },
 
@@ -58,7 +56,6 @@ export default {
     getNewRefreshToken({ dispatch }) {
       new Promise(resolve => {
         return Auth.refreshToken(Auth.getRefreshToken()).then(async response => {
-          console.log(response)
           await dispatch("authorize", response.data);
           return resolve();
         });
@@ -69,7 +66,6 @@ export default {
       const renewalTimeBuffer = 2000;
       const timeDiff = Auth.getTimeDiff(state && state.auth && state.auth.exp);
       let timeoutCount = renewalTimeBuffer < timeDiff ? timeDiff - renewalTimeBuffer : timeDiff;
-      console.log(timeDiff)
       if (timeoutCount) {
         const renewalTimeout = setTimeout(() => {
           dispatch("getNewRefreshToken");
@@ -115,6 +111,14 @@ export default {
       return Auth.getUserDetails(state.authorizedUserEmail)
         .then(success => {
           commit(constans.SET_USER_DETAILS, success.data);
+          return Promise.resolve(success.data);
+        })
+        .catch(err => Promise.reject(err));
+    },
+
+    async sendAgainConfirmationEmail({ state }) {
+      return Auth.sendConfirmationEmail(state.authorizedUserEmail)
+        .then(success => {
           return Promise.resolve(success.data);
         })
         .catch(err => Promise.reject(err));
