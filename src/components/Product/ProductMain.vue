@@ -20,7 +20,7 @@
             class="mb-2"
             @submit="$event.preventDefault()"
             inline
-            v-if="productDetails && productDetails._id === product._id"
+            v-if="openedProductDetails && openedProductDetails._id === product._id"
           >
             <b-input
               type="number"
@@ -38,12 +38,12 @@
         </b-col>
         <ProductNutritionalValuesMain
           v-if="isShowedDetails"
-          :productDetails="productDetails"
+          :productDetails="openedProductDetails"
           :detailsAreLoaded="detailsAreLoaded"
         />
         <ProductNutritionalValuesAdditional
           v-if="isShowedDetails"
-          :productDetails="productDetails"
+          :productDetails="openedProductDetails"
           :detailsAreLoaded="detailsAreLoaded"
         />
       </b-row>
@@ -53,9 +53,9 @@
 
 <script>
 import debounce from "lodash.debounce";
-import axios from "axios";
 import ProductNutritionalValuesAdditional from "@/components/Product/ProductNutritionalValues/ProductNutritionalValuesAdditional.vue";
 import ProductNutritionalValuesMain from "@/components/Product/ProductNutritionalValues/ProductNutritionalValuesMain.vue";
+import { mapActions, mapGetters } from "vuex";
 
 export default {
   name: "ProductMain",
@@ -66,16 +66,19 @@ export default {
   data() {
     return {
       detailsAreLoaded: false,
-      productDetails: {},
       countValue: 100
     };
   },
   computed: {
+    ...mapGetters("product", ["openedProductDetails"]),
+
     isShowedDetails() {
       return this.$route.params.productId && this.$route.params.productId == this.product._id;
     }
   },
   methods: {
+    ...mapActions("product", ["fetchProductDetails"]),
+
     showDetails() {
       if (!this.isShowedDetails && this.$route.params.productId !== this.product._id) {
         this.$router.push({ name: "product-id", params: { productId: this.product._id } });
@@ -86,11 +89,9 @@ export default {
       if (this.product) {
         this.detailsAreLoaded = true;
         this.$emit("scroll-list-to-product", this.product._id);
-        axios
-          .get(`http://${process.env.VUE_APP_API_HOST}:3000/api/details/` + this.product._id)
-          .then(response => {
+        this.fetchProductDetails(this.product._id)
+          .then(() => {
             this.detailsAreLoaded = false;
-            this.productDetails = response.data.details;
           })
           .catch(e => {
             console.error(e);

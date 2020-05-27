@@ -39,11 +39,11 @@
 
 <script>
 import debounce from "lodash.debounce";
-import axios from "axios";
 import SearchInput from "@/components/Utils/SearchInput.vue";
 import Spinner from "@/components/Utils/Spinner.vue";
 import ProductMain from "@/components/Product/ProductMain.vue";
 import Calculator from "@/components/Calculator/Calculator.vue";
+import { mapActions, mapGetters } from "vuex";
 
 export default {
   name: "Search",
@@ -53,12 +53,13 @@ export default {
       loading: false,
       step: 0,
       searchValue: "",
-      foundProducts: [],
       productsToCalculate: [],
       calculatorIsOpened: false
     };
   },
   computed: {
+    ...mapGetters("product", ["foundProducts"]),
+
     productsLabel() {
       if (this.foundProducts.length === 1) {
         return "produkt";
@@ -70,6 +71,8 @@ export default {
     }
   },
   methods: {
+    ...mapActions("product", ["searchProducts"]),
+
     scrollToProduct(productId) {
       const productComponent = document.getElementById("product-main-info-" + productId);
       const navbar = document.querySelector("nav");
@@ -82,11 +85,9 @@ export default {
     },
     filterProducts: debounce(function(value) {
       this.loading = true;
-      axios
-        .get(`http://${process.env.VUE_APP_API_HOST}:3000/api/products/search/` + value)
-        .then(response => {
+      this.searchProducts(value)
+        .then(() => {
           this.loading = false;
-          this.foundProducts = response.data.products;
           this.step = 1;
         })
         .catch(e => {

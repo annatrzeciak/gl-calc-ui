@@ -1,11 +1,15 @@
 <template>
-  <div class="slick-content text-center">
+  <div class="slick-content text-center" v-if="lastAddedProducts.length">
     <h3 class="font-weight-bold">Ostatnio dodane produkty</h3>
     <slick ref="slick" :options="slickOptions">
-      <router-link   :to="{
+      <router-link
+        :to="{
           name: 'product-id',
-          params: { searchValue: product.name_pl, productId:product._id }
-        }" v-for="product in productsLastAdded" :key="product._id" >
+          params: { searchValue: product.name_pl, productId: product._id }
+        }"
+        v-for="product in lastAddedProducts"
+        :key="product._id"
+      >
         <img
           :src="product.photo ? product.photo : '/images/default-image.png'"
           :alt="product.name_pl"
@@ -18,7 +22,7 @@
 
 <script>
 import Slick from "vue-slick";
-import axios from "axios";
+import { mapActions, mapGetters } from "vuex";
 
 export default {
   name: "ProductsLastAdded",
@@ -27,7 +31,6 @@ export default {
 
   data() {
     return {
-      productsLastAdded: [],
       slickOptions: {
         arrows: false,
         slidesToShow: 5,
@@ -63,8 +66,11 @@ export default {
       }
     };
   },
+  computed: {
+    ...mapGetters("product", ["lastAddedProducts"])
+  },
   watch: {
-    productsLastAdded() {
+    lastAddedProducts() {
       let currIndex = this.$refs.slick.currentSlide();
 
       this.$refs.slick.destroy();
@@ -75,17 +81,12 @@ export default {
     }
   },
   created() {
-    axios
-      .get(`http://${process.env.VUE_APP_API_HOST}:3000/api/products/last-added`)
-      .then(response => {
-        this.productsLastAdded = response.data.products;
-      })
-      .catch(e => {
-        console.error(e);
-      });
+    this.fetchLastAddedProducts();
   },
 
   methods: {
+    ...mapActions("product", ["fetchLastAddedProducts"]),
+
     next() {
       this.$refs.slick.next();
     },
