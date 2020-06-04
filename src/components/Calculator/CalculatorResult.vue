@@ -10,18 +10,18 @@
 export default {
   name: "CalculatorResult",
   props: {
-    products: { type: Array }
+    calculations: { type: Array }
   },
   computed: {
     kcal() {
       let sum = 0;
-      this.products.forEach(product => {
+      this.calculations.forEach(calcItem => {
         sum +=
           Math.round(
-            ((product.details.energyKcal
-              ? product.details.energyKcal.val
-              : product.details.energyKj.val / 4.1858) *
-              product.count) /
+            ((calcItem.product.details.energyKcal
+              ? calcItem.product.details.energyKcal.val
+              : calcItem.product.details.energyKj.val / 4.1858) *
+              calcItem.count) /
               10
           ) / 10;
       });
@@ -29,11 +29,11 @@ export default {
     },
     glycemicLoad() {
       let sum = 0;
-      this.products.forEach(product => {
+      this.calculations.forEach(calcItem => {
         sum +=
-          (product.details.gi.val *
-            Math.abs(product.details.carbohydrate.val - product.details.fibre.val) *
-            product.count) /
+          (calcItem.product.details.gi.val *
+            Math.abs(calcItem.product.details.carbohydrate.val - calcItem.product.details.fibre.val) *
+            calcItem.count) /
           10000;
       });
       return Math.round(sum * 100) / 100;

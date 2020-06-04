@@ -15,12 +15,12 @@ export default {
     searchValue: "",
     foundProducts: [],
     openedProductId: "",
-    openedProductDetails: {}
+    openedProductWithDetails: {}
   },
   getters: {
     lastAddedProducts: state => state.lastAddedProducts,
     foundProducts: state => state.foundProducts,
-    openedProductDetails: state => state.openedProductDetails
+    openedProductWithDetails: state => state.openedProductWithDetails
   },
   mutations: {
     [constans.SET_LAST_ADDED_PRODUCTS](state, data) {
@@ -36,7 +36,7 @@ export default {
       state.openedProductId = value;
     },
     [constans.SET_OPENED_PRODUCT_DETAILS](state, data) {
-      state.openedProductDetails = data.details;
+      state.openedProductWithDetails = data.product;
     }
   },
   actions: {
@@ -58,9 +58,9 @@ export default {
         })
         .catch(err => Promise.reject(err));
     },
-    async fetchProductDetails({ commit, state }, productId) {
+    async fetchProductWithDetails({ commit, state }, productId) {
       commit(constans.SET_OPENED_PRODUCT_ID, productId);
-      return Product.getProductDetails(state.openedProductId)
+      return Product.getProductWithDetails(state.openedProductId)
         .then(success => {
           commit(constans.SET_OPENED_PRODUCT_DETAILS, success.data);
           return Promise.resolve(success.data);

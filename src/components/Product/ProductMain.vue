@@ -20,7 +20,7 @@
             class="mb-2"
             @submit="$event.preventDefault()"
             inline
-            v-if="openedProductDetails && openedProductDetails._id === product._id"
+            v-if="isShowedDetails"
           >
             <b-input
               type="number"
@@ -28,7 +28,7 @@
               class="col-3 offset-3 mr-2 text-right"
               placeholder="Podaj wagę"
               :value="countValue"
-              @change="countValue = $event.target.value"
+              @change="updateValue"
             />
             <label class="mr-3" for="inline-form-input-name">g</label>
             <button @click.stop="addToCalculator" class="btn btn-blue no-shadow border-1">
@@ -38,12 +38,12 @@
         </b-col>
         <ProductNutritionalValuesMain
           v-if="isShowedDetails"
-          :productDetails="openedProductDetails"
+          :productDetails="openedProductWithDetails.details ? openedProductWithDetails.details : {}"
           :detailsAreLoaded="detailsAreLoaded"
         />
         <ProductNutritionalValuesAdditional
           v-if="isShowedDetails"
-          :productDetails="openedProductDetails"
+          :productDetails="openedProductWithDetails.details ? openedProductWithDetails.details : {}"
           :detailsAreLoaded="detailsAreLoaded"
         />
       </b-row>
@@ -70,14 +70,14 @@ export default {
     };
   },
   computed: {
-    ...mapGetters("product", ["openedProductDetails"]),
+    ...mapGetters("product", ["openedProductWithDetails"]),
 
     isShowedDetails() {
       return this.$route.params.productId && this.$route.params.productId == this.product._id;
     }
   },
   methods: {
-    ...mapActions("product", ["fetchProductDetails"]),
+    ...mapActions("product", ["fetchProductWithDetails"]),
 
     showDetails() {
       if (!this.isShowedDetails && this.$route.params.productId !== this.product._id) {
@@ -89,7 +89,7 @@ export default {
       if (this.product) {
         this.detailsAreLoaded = true;
         this.$emit("scroll-list-to-product", this.product._id);
-        this.fetchProductDetails(this.product._id)
+        this.fetchProductWithDetails(this.product._id, 1)
           .then(() => {
             this.detailsAreLoaded = false;
           })
@@ -98,11 +98,13 @@ export default {
           });
       }
     }, 500),
+    updateValue(event){
+      this.countValue = event;
+    },
     addToCalculator() {
       this.$emit("add-to-calc", {
         id: this.product._id,
-        main: this.product,
-        details: this.productDetails,
+        product: this.openedProductWithDetails,
         count: Number(this.countValue)
       });
     }

@@ -9,6 +9,6 @@ export async function searchProducts(searchValue) {
   return await Vue.http.get(`/api/products/search/${searchValue}`);
 }
 
-export async function getProductDetails(productId) {
-  return await Vue.http.get(`/api/details/${productId}`);
+export async function getProductWithDetails(productId) {
+  return await Vue.http.get(`/api/products/${productId}?withDetails=true`);
 }

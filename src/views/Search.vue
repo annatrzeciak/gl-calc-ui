@@ -2,7 +2,7 @@
   <div :class="['search-page', { 'has-results': $route.params.searchValue }]">
     <Calculator
       @remove-product="removeProductFromCalc"
-      :products="productsToCalculate"
+      :calculations="productsToCalculate"
       :calculatorIsOpened="calculatorIsOpened"
       @toggle-calculator="calculatorIsOpened = !calculatorIsOpened"
       @close-calculator="calculatorIsOpened = false"

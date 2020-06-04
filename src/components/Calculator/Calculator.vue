@@ -9,30 +9,12 @@
   >
     <h3 @click="$emit('toggle-calculator')">Kalkulator</h3>
     <div class="calculator-content">
-      <div v-if="products.length">
+      <div v-if="calculations.length">
         <h4>Dodane produkty</h4>
-        <table>
-          <thead>
-            <tr class="font-weight-bold text-center">
-              <td>Ilość</td>
-              <td>Nazwa</td>
-              <td>Węglowodany<br />przyswajalne</td>
-              <td>IG</td>
-              <td>ŁG</td>
-              <td>Kcal</td>
-              <td></td>
-            </tr>
-          </thead>
-          <tbody>
-            <CalculatorRow
-              @remove-product="$emit('remove-product', product.id)"
-              v-for="product of products"
-              :key="product.main._id"
-              :product="product"
-            />
-            <CalculatorResult :products="products" />
-          </tbody>
-        </table>
+        <CalculatorTable
+          :calculations="calculations"
+          @remove-product="$emit('remove-product', $event)"
+        />
       </div>
       <div v-else>Dodaj produkty do kalkulatora</div>
     </div>
@@ -40,14 +22,13 @@
 </template>
 
 <script>
-import CalculatorRow from "@/components/Calculator/CalculatorRow.vue";
-import CalculatorResult from "@/components/Calculator/CalculatorResult.vue";
+import CalculatorTable from "./CalculatorTable";
 
 export default {
   name: "Calculator",
-  components: { CalculatorRow, CalculatorResult },
+  components: { CalculatorTable },
   props: {
-    products: { type: Array, default: () => [] },
+    calculations: { type: Array, default: () => [] },
     calculatorIsOpened: { type: Boolean, default: false }
   },
   methods: {

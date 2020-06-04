@@ -1,5 +1,5 @@
 <template>
-  <b-navbar toggleable="lg" type="dark" class="text-shadow">
+  <b-navbar toggleable="lg" type="dark">
     <b-navbar-brand class="font-weight-bold">
       <router-link to="/">Oblicz GL</router-link>
     </b-navbar-brand>
@@ -8,8 +8,13 @@
         <router-link to="/szukaj">szukaj</router-link>
         <router-link to="/wiecej">o stronie</router-link>
         <router-link to="/zaloguj" v-if="!isLogged">zaloguj</router-link>
-        <router-link to="/konto" v-if="isLogged">{{loggedUserEmail? loggedUserEmail : 'konto'}}</router-link>
-        <a v-if="isLogged" @click="logoutUser">wyloguj</a>
+        <b-nav-item-dropdown right v-if="isLogged" text="konto">
+          <b-dropdown-item to="/konto">{{
+            loggedUserEmail ? loggedUserEmail : "konto"
+          }}</b-dropdown-item>
+          <b-dropdown-item to="/kalkulacje" >kalkulacje</b-dropdown-item>
+          <b-dropdown-item @click="logoutUser">wyloguj</b-dropdown-item>
+        </b-nav-item-dropdown>
       </b-navbar-nav>
     </b-collapse>
   </b-navbar>
@@ -23,7 +28,7 @@ export default {
   props: { dark: { type: Boolean } },
   data() {
     return {
-      isDark: true,
+      isDark: true
     };
   },
   computed: {
@@ -31,16 +36,15 @@ export default {
   },
   methods: {
     ...mapActions("auth", ["logoutUser"])
-
   }
 };
 </script>
 
-<style lang="scss" scoped>
+<style lang="scss">
 @import "../styles/colors";
 nav {
   top: 0;
-  position: fixed;
+  position: fixed !important;
   width: 100%;
   max-width: 100%;
   z-index: 100;
@@ -55,15 +59,34 @@ nav {
   .navbar-brand a {
     font-weight: 800;
   }
-  a {
+  a:not(.dropdown-item) {
     text-decoration: none !important;
     border-bottom: 2px solid transparent;
     padding: 3px 5px;
+    font-weight: 600;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
 
     &:hover,
     &.router-link-active {
       opacity: 1;
       border-bottom: 2px solid $darkBlue;
+    }
+  }
+  .b-nav-dropdown {
+    & > a.dropdown-toggle {
+      padding: 3px 5px;
+      font-weight: 600;
+      color: white !important;
+    }
+    & a.dropdown-item {
+      color: rgba(0,0,0,0.5);
+      text-align: right;
+      font-size: 14px;
+      &:hover,
+      &.router-link-active {
+        color: rgba(0,0,0,0.9);
+
+      }
     }
   }
 }
