@@ -53,7 +53,9 @@ body {
 .light-grey-text {
   color: $lightGrey;
 }
-
+*{
+  border-radius: 0 !important;
+}
 a {
   color: $darkBlue;
 

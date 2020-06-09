@@ -10,3 +10,12 @@ export async function getUserCalculations(email, page, pageSize) {
     }
   );
 }
+export async function saveCalculation(email, calculations) {
+  return await Vue.http.post(
+    `/api/calculations/` + email + "/add-calculation",
+    { calculations },
+    {
+      headers: authenticationHeader()
+    }
+  );
+}

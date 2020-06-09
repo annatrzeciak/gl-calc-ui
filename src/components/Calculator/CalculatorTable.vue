@@ -15,7 +15,7 @@
       <CalculatorRow
         @remove-product="$emit('remove-product', calcItem.id)"
         v-for="calcItem of calculations"
-        :key="calcItem.id"
+        :key="calcItem.id + ';' + calcItem.mealNumber"
         :product="calcItem.product"
         :count="calcItem.count"
         :deleteIsPossible="deleteIsPossible"

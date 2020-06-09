@@ -1,7 +1,7 @@
 <template>
   <div :class="['search-page', { 'has-results': $route.params.searchValue }]">
     <Calculator
-      @remove-product="removeProductFromCalc"
+      @remove-product="removeProductFromCalc($event)"
       :calculations="productsToCalculate"
       :calculatorIsOpened="calculatorIsOpened"
       @toggle-calculator="calculatorIsOpened = !calculatorIsOpened"
@@ -53,7 +53,13 @@ export default {
       loading: false,
       step: 0,
       searchValue: "",
-      productsToCalculate: [],
+      productsToCalculate: [
+        { mealNumber: 1, products: [] },
+        { mealNumber: 2, products: [] },
+        { mealNumber: 3, products: [] },
+        { mealNumber: 4, products: [] },
+        { mealNumber: 5, products: [] }
+      ],
       calculatorIsOpened: false
     };
   },
@@ -96,18 +102,23 @@ export default {
     }, 500),
     addToCalc(product) {
       this.calculatorIsOpened = true;
-      const productInCalc = this.productsToCalculate.find(
-        productInCalc => productInCalc.id == product.id
-      );
-      if (productInCalc) {
-        productInCalc.count += product.count;
-      } else {
-        this.productsToCalculate.push(product);
+      const meal = this.productsToCalculate.find(meal => meal.mealNumber === product.mealNumber);
+      if (meal) {
+        const productInCalc = meal.products.find(
+          prod => prod.id === product.id && prod.mealNumber === product.mealNumber
+        );
+        if (productInCalc) {
+          productInCalc.count += product.count;
+        } else {
+          meal.products.push(product);
+        }
       }
     },
-    removeProductFromCalc(productId) {
-      this.productsToCalculate = this.productsToCalculate.filter(
-        product => product.id !== productId
+    removeProductFromCalc({ productId, mealNumber }) {
+      const meal = this.productsToCalculate.find(meal => meal.mealNumber === mealNumber);
+
+      meal.products = meal.products.filter(
+        product => !(product.id === productId && product.mealNumber === mealNumber)
       );
     }
   },

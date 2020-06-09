@@ -16,12 +16,7 @@
           />
           <h4 class="product-main-header">{{ product.name_pl }}</h4>
 
-          <b-form
-            class="mb-2"
-            @submit="$event.preventDefault()"
-            inline
-            v-if="isShowedDetails"
-          >
+          <b-form class="mb-2" @submit="$event.preventDefault()" inline v-if="isShowedDetails">
             <b-input
               type="number"
               id="inline-form-input-name"
@@ -31,9 +26,13 @@
               @change="updateValue"
             />
             <label class="mr-3" for="inline-form-input-name">g</label>
-            <button @click.stop="addToCalculator" class="btn btn-blue no-shadow border-1">
-              Dodaj
-            </button>
+            <b-dropdown text="Dodaj do" variant="blue">
+              <b-dropdown-item @click.stop="addToCalculator(1)">śniadania</b-dropdown-item>
+              <b-dropdown-item @click.stop="addToCalculator(2)">II śniadania</b-dropdown-item>
+              <b-dropdown-item @click.stop="addToCalculator(3)">obiadu</b-dropdown-item>
+              <b-dropdown-item @click.stop="addToCalculator(4)">podwieczorku</b-dropdown-item>
+              <b-dropdown-item @click.stop="addToCalculator(5)">kolacji</b-dropdown-item>
+            </b-dropdown>
           </b-form>
         </b-col>
         <ProductNutritionalValuesMain
@@ -98,12 +97,13 @@ export default {
           });
       }
     }, 500),
-    updateValue(event){
+    updateValue(event) {
       this.countValue = event;
     },
-    addToCalculator() {
+    addToCalculator(mealNumber) {
       this.$emit("add-to-calc", {
         id: this.product._id,
+        mealNumber,
         product: this.openedProductWithDetails,
         count: Number(this.countValue)
       });

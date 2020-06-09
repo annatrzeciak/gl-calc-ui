@@ -92,7 +92,7 @@ import { mapActions } from "vuex";
 import { required, minLength, email, sameAs } from "vuelidate/lib/validators";
 
 export default {
-  name: "Login",
+  name: "NewAccount",
   data() {
     return {
       name: "",
