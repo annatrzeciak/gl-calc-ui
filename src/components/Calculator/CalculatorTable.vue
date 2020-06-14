@@ -2,20 +2,20 @@
   <table :class="['table-' + size]">
     <thead>
       <tr class="font-weight-bold text-center">
-        <td class="text-right">Ilość</td>
-        <td class="text-left">Nazwa</td>
-        <td class="text-right">Węglowodany<br />przyswajalne</td>
-        <td class="text-right">IG</td>
-        <td class="text-right">ŁG</td>
-        <td class="text-right">Kcal</td>
+        <td class="text-right width-1">Ilość</td>
+        <td class="text-left  width-3">Nazwa</td>
+        <td class="text-right width-1">Węgl.<br />przysw.</td>
+        <td class="text-right width-1">IG</td>
+        <td class="text-right width-1">ŁG</td>
+        <td class="text-right width-1">Kcal</td>
         <td></td>
       </tr>
     </thead>
     <tbody>
       <CalculatorRow
-        @remove-product="$emit('remove-product', calcItem.id)"
+        @remove-product="$emit('remove-product', calcItem._id)"
         v-for="calcItem of calculations"
-        :key="calcItem.id + ';' + calcItem.mealNumber"
+        :key="calcItem._id + ';' + calcItem.mealNumber"
         :product="calcItem.product"
         :count="calcItem.count"
         :deleteIsPossible="deleteIsPossible"
@@ -60,9 +60,22 @@ export default {
   .calculator-content {
     padding: 10px;
   }
-  td {
-    padding-right: 5px;
-    padding-left: 5px;
+  table {
+    width: 100%;
+
+    td {
+      padding-right: 5px;
+      padding-left: 5px;
+      &.width-3 {
+        width: calc(300% / 9);
+      }
+      &.width-2 {
+        width: calc(200% / 9);
+      }
+      &.width-1 {
+        width: calc(100% / 9);
+      }
+    }
   }
 }
 .table-wide {

@@ -13,7 +13,6 @@ import Toasted from "vue-toasted";
 import App from "./App.vue";
 import ClickOutside from "@/directives/ClickOutside";
 import store from "./store/store";
-
 import router from "./router";
 import { initializationUserAuthentication } from "./store/api/auth";
 

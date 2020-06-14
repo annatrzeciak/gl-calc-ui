@@ -71,13 +71,15 @@ export default {
   },
   watch: {
     lastAddedProducts() {
-      let currIndex = this.$refs.slick.currentSlide();
+      if (this.$refs.slick) {
+        let currIndex = this.$refs.slick.currentSlide();
 
-      this.$refs.slick.destroy();
-      this.$nextTick(() => {
-        this.$refs.slick.create();
-        this.$refs.slick.goTo(currIndex, true);
-      });
+        this.$refs.slick.destroy();
+        this.$nextTick(() => {
+          this.$refs.slick.create();
+          this.$refs.slick.goTo(currIndex, true);
+        });
+      }
     }
   },
   created() {

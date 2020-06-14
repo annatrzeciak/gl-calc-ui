@@ -102,7 +102,7 @@ export default {
     },
     addToCalculator(mealNumber) {
       this.$emit("add-to-calc", {
-        id: this.product._id,
+        _id: this.product._id,
         mealNumber,
         product: this.openedProductWithDetails,
         count: Number(this.countValue)

@@ -46,9 +46,6 @@
             @remove-product="$emit('remove-product', { productId: $event, mealNumber: 5 })"
           />
         </div>
-        <button @click.stop="saveCalculation" class="btn btn-blue no-shadow border-1">
-          Zapisz
-        </button>
       </div>
       <div v-else>Dodaj produkty do kalkulatora</div>
     </div>
@@ -57,7 +54,6 @@
 
 <script>
 import CalculatorTable from "./CalculatorTable";
-import { mapActions, mapGetters } from "vuex";
 export default {
   name: "Calculator",
   components: { CalculatorTable },
@@ -66,7 +62,6 @@ export default {
     calculatorIsOpened: { type: Boolean, default: false }
   },
   computed: {
-    ...mapGetters("auth", ["loggedUserEmail"]),
     calculationsIncludesProducts() {
       if (this.calculations) {
         return Object.values(this.calculations).find(calc => calc.products.length);
@@ -100,20 +95,8 @@ export default {
     }
   },
   methods: {
-    ...mapActions("calculation", ["addCalculation"]),
     closeCalc() {
       if (this.calculatorIsOpened) this.$emit("close-calculator");
-    },
-    saveCalculation() {
-      const calculationToSave = {
-        date: new Date().toDateString(),
-        calculations: this.calculations.filter(meal => meal.products.length)
-      };
-      this.addCalculation({ email: this.loggedUserEmail, data: calculationToSave })
-        .then(() => this.$toasted.success("Kalkulacja zapisna pomyślnie"))
-        .catch(() =>
-          this.$toasted.error("Wystąpił błąd podczas zapisywania. Spróbuj ponownie później")
-        );
     }
   }
 };

@@ -60,11 +60,14 @@ export default {
         { mealNumber: 4, products: [] },
         { mealNumber: 5, products: [] }
       ],
-      calculatorIsOpened: false
+      calculatorIsOpened: false,
+      savingCalculation: false
     };
   },
   computed: {
     ...mapGetters("product", ["foundProducts"]),
+    ...mapGetters("auth", ["loggedUserEmail"]),
+    ...mapGetters("calculation", ["todayCalculations"]),
 
     productsLabel() {
       if (this.foundProducts.length === 1) {
@@ -78,6 +81,7 @@ export default {
   },
   methods: {
     ...mapActions("product", ["searchProducts"]),
+    ...mapActions("calculation", ["fetchTodayCalculations", "addCalculation"]),
 
     scrollToProduct(productId) {
       const productComponent = document.getElementById("product-main-info-" + productId);
@@ -104,22 +108,35 @@ export default {
       this.calculatorIsOpened = true;
       const meal = this.productsToCalculate.find(meal => meal.mealNumber === product.mealNumber);
       if (meal) {
-        const productInCalc = meal.products.find(
-          prod => prod.id === product.id && prod.mealNumber === product.mealNumber
-        );
+        const productInCalc = meal.products.find(prod => prod.product._id == product._id);
         if (productInCalc) {
           productInCalc.count += product.count;
         } else {
           meal.products.push(product);
         }
+        this.saveCalculation();
       }
     },
     removeProductFromCalc({ productId, mealNumber }) {
       const meal = this.productsToCalculate.find(meal => meal.mealNumber === mealNumber);
 
-      meal.products = meal.products.filter(
-        product => !(product.id === productId && product.mealNumber === mealNumber)
-      );
+      meal.products = meal.products.filter(product => product._id !== productId);
+      this.saveCalculation();
+    },
+    saveCalculation() {
+      this.savingCalculation = true;
+      const calculationToSave = {
+        date: new Date().toDateString(),
+        calculations: this.productsToCalculate.filter(meal => meal.products.length || meal._id)
+      };
+      this.addCalculation({ email: this.loggedUserEmail, data: calculationToSave })
+        .then(() => this.$toasted.success("Kalkulacja zapisna pomyślnie"))
+        .catch(() =>
+          this.$toasted.error("Wystąpił błąd podczas zapisywania. Spróbuj ponownie później")
+        )
+        .finally(() => {
+          this.savingCalculation = false;
+        });
     }
   },
   created() {
@@ -128,11 +145,30 @@ export default {
       this.filterProducts(this.$route.params.searchValue);
     }
   },
+  async mounted() {
+    if (this.loggedUserEmail) await this.fetchTodayCalculations({ email: this.loggedUserEmail });
+  },
   watch: {
     $route() {
       if (this.$route.params.searchValue !== this.searchValue) {
         this.searchValue = this.$route.params.searchValue;
         this.filterProducts(this.$route.params.searchValue);
+      }
+    },
+    todayCalculations() {
+      if (this.todayCalculations) {
+        Object.values(this.todayCalculations).forEach(calcFromDb => {
+          let meal = this.productsToCalculate.find(
+            meal => meal.mealNumber === calcFromDb.mealNumber
+          );
+          if (meal) {
+            meal.products = calcFromDb.products;
+            meal._id = calcFromDb._id;
+            meal.date = calcFromDb.date;
+            meal.mealNumber = calcFromDb.mealNumber;
+            meal.userId = calcFromDb.userId;
+          }
+        });
       }
     }
   }

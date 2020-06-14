@@ -8,7 +8,7 @@
     <td class="text-right">{{ product.details.gi.val }}</td>
     <td class="text-right">{{ glycemicLoad }}</td>
     <td class="text-right">{{ kcal }}</td>
-    <td><i v-if="deleteIsPossible" @click="$emit('remove-product')" class="icon icon-delete" /></td>
+    <td><i v-if="deleteIsPossible" @click.stop="$emit('remove-product')" class="icon icon-delete" /></td>
   </tr>
 </template>
 
