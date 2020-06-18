@@ -1,5 +1,4 @@
 import * as Calculation from "../api/calculation";
-import * as Auth from "../api/auth";
 
 export const constans = {
   SET_CALCULATIONS: "SET_CALCULATIONS",
@@ -47,11 +46,11 @@ export default {
         })
         .catch(err => Promise.reject(err));
     },
-    async addCalculation(ctx, { email, data }) {
-      console.log(email);
+    async addCalculation({ commit }, { email, data }) {
       return Calculation.saveCalculation(email, data)
-        .then(response => {
-          return Promise.resolve(response);
+        .then(success => {
+          commit(constans.SET_TODAY_CALCULATIONS, success.data.calculations);
+          return Promise.resolve(success.data);
         })
         .catch(err => Promise.reject(err));
     }

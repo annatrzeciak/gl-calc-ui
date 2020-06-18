@@ -134,9 +134,7 @@ export default {
         .catch(() =>
           this.$toasted.error("Wystąpił błąd podczas zapisywania. Spróbuj ponownie później")
         )
-        .finally(() => {
-          this.savingCalculation = false;
-        });
+
     }
   },
   created() {
