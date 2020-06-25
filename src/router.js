@@ -8,11 +8,12 @@ import Home from "@/views/Home.vue";
 import About from "@/views/About.vue";
 import Search from "@/views/Search.vue";
 import Login from "@/views/Login.vue";
-import Account from "@/views/Account.vue";
+import Account from "@/views/Account/Account.vue";
 import NewAccount from "@/views/NewAccount.vue";
 import TokenError from "@/views/Token/TokenError.vue";
 import TokenSuccess from "@/views/Token/TokenSuccess.vue";
-import Calculations from "@/views/Calculations.vue";
+import Calculations from "@/views/Account/Calculations.vue";
+import Shop from "@/views/Account/Shop.vue";
 
 Vue.use(VueRouter);
 
@@ -64,9 +65,15 @@ const routes = [
     beforeEnter: auth
   },
   {
-    path: "/kalkulacje",
+    path: "/konto/kalkulacje",
     name: "calculations",
     component: Calculations,
+    beforeEnter: auth
+  },
+  {
+    path: "/konto/sklep",
+    name: "shop",
+    component: Shop,
     beforeEnter: auth
   },
   { path: "/token-error", name: "token-error", component: TokenError },

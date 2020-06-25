@@ -5,6 +5,10 @@ import "slick-carousel/slick/slick.css";
 import "./styles/main.scss";
 import Vue from "vue";
 import VueResource from "vue-resource";
+import { library } from "@fortawesome/fontawesome-svg-core";
+import { fas } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
+library.add(fas);
 
 import { BootstrapVue, IconsPlugin } from "bootstrap-vue";
 import Vuelidate from "vuelidate";
@@ -29,6 +33,8 @@ Vue.use(Toasted, {
 });
 Vue.config.productionTip = false;
 Vue.directive("click-outside", ClickOutside);
+Vue.component("font-awesome-icon", FontAwesomeIcon);
+Vue.config.productionTip = false;
 
 const initAuth = async () => {
   await initializationUserAuthentication();

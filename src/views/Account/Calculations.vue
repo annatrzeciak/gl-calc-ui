@@ -28,16 +28,21 @@
         </b-collapse>
       </b-card>
     </div>
+    <Spinner v-if="calculationsAreLoaded" />
   </b-container>
 </template>
 
 <script>
 import { mapActions, mapGetters } from "vuex";
-import CalculatorTable from "../components/Calculator/CalculatorTable";
+import CalculatorTable from "../../components/Calculator/CalculatorTable";
+import Spinner from "../../components/Utils/Spinner";
 
 export default {
   name: "Calculations",
-  components: { CalculatorTable },
+  components: { Spinner, CalculatorTable },
+  data: () => ({
+    calculationsAreLoaded: false
+  }),
   computed: {
     ...mapGetters("calculation", ["allCalculations"]),
     ...mapGetters("auth", ["loggedUserEmail"])
@@ -46,7 +51,10 @@ export default {
     ...mapActions("calculation", ["fetchCalculations"])
   },
   created() {
-    this.fetchCalculations({ email: this.loggedUserEmail, page: 1, pageSize: 20 });
+    this.calculationsAreLoaded = true;
+    this.fetchCalculations({ email: this.loggedUserEmail, page: 1, pageSize: 20 }).then(() => {
+      this.calculationsAreLoaded = false;
+    });
   }
 };
 </script>

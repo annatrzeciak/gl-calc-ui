@@ -3,7 +3,7 @@ i.icon{
   position: relative;
   width: 18px;
   height: 18px;
-  display: block;
+  display: inline-block;
   opacity: 0.7;
   cursor: pointer;
   &:hover{
@@ -11,5 +11,8 @@ i.icon{
   }
   &.icon-delete{
     content: url("/icons/icon-delete.svg");
+  }
+  &.info{
+    content: '\8505';
   }
 }

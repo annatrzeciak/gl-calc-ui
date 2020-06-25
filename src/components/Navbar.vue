@@ -9,10 +9,15 @@
         <router-link to="/wiecej">o stronie</router-link>
         <router-link to="/zaloguj" v-if="!isLogged">zaloguj</router-link>
         <b-nav-item-dropdown right v-if="isLogged" text="konto">
-          <b-dropdown-item to="/konto">{{
+          <router-link tag="b-dropdown-item" :to="{ name: 'account' }">{{
             loggedUserEmail ? loggedUserEmail : "konto"
-          }}</b-dropdown-item>
-          <b-dropdown-item to="/kalkulacje" >kalkulacje</b-dropdown-item>
+          }}</router-link>
+          <router-link tag="b-dropdown-item" :to="{ name: 'calculations' }"
+            >kalkulacje</router-link
+          >
+          <router-link tag="b-dropdown-item" :to="{ name: 'shop' }"
+          >sklep</router-link
+          >
           <b-dropdown-item @click="logoutUser">wyloguj</b-dropdown-item>
         </b-nav-item-dropdown>
       </b-navbar-nav>
@@ -79,13 +84,12 @@ nav {
       color: white !important;
     }
     & a.dropdown-item {
-      color: rgba(0,0,0,0.5);
+      color: rgba(0, 0, 0, 0.5);
       text-align: right;
       font-size: 14px;
       &:hover,
       &.router-link-active {
-        color: rgba(0,0,0,0.9);
-
+        color: rgba(0, 0, 0, 0.9);
       }
     }
   }

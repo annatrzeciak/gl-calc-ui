@@ -1,8 +1,6 @@
 <template>
   <footer>
-    <ProductsLastAdded
-      v-if="$route.name !== 'login' && $route.name !== 'new-account' && $route.name !== 'account'"
-    />
+    <ProductsLastAdded v-if="$route.path.includes('szukaj')" />
     <div class="text-center footer-content">Wszelkie prawa zastrzeżone &copy; 2020</div>
   </footer>
 </template>
