@@ -51,10 +51,10 @@
       </table>
       <b-alert
         show
-        v-if="$route.query.status && $route.query.status.includes('error')"
+        v-if="errorMessage || ($route.query.status && $route.query.status.includes('error'))"
         variant="danger"
-        >Wystąpił błąd podczas płatności. Kod błędu:
-        {{ $route.query.status.split(":")[1] }}</b-alert
+        >Wystąpił błąd podczas płatności.
+        {{ $route.query.status ? "Kod błędu:" + $route.query.status.split(":")[1] : "" }}</b-alert
       >
       <b-alert
         show
@@ -73,7 +73,9 @@ import { mapActions, mapGetters } from "vuex";
 
 export default {
   name: "Shop",
-  data: () => ({}),
+  data: () => ({
+    errorMessage: ""
+  }),
   computed: {
     ...mapGetters("auth", ["loggedUserEmail"])
   },
@@ -81,9 +83,7 @@ export default {
     ...mapActions("subscription", ["createPayment"]),
 
     async buyExtendedPlan() {
-      const stripe = await loadStripe(
-        "pk_test_51Gwrd7J17l3GVL1fEajdnSEuNQy93L8Vih3pB3L6QaROZy4ZgKrQYLCwj7OBApRbmxeTSZgnPbDJDOn1yDs4sJUQ00wJ6olL7I"
-      );
+      const stripe = await loadStripe(process.env.VUE_APP_STRIPE_KEY);
 
       this.createPayment({ email: this.loggedUserEmail }).then(async res => {
         const { error } = await stripe.redirectToCheckout({
@@ -92,7 +92,7 @@ export default {
           // instead of the {{CHECKOUT_SESSION_ID}} placeholder.
           sessionId: res.session.id
         });
-        console.log(res);
+        if (error) this.errorMessage = error;
       });
     }
   },

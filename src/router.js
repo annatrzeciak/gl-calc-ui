@@ -14,6 +14,7 @@ import TokenError from "@/views/Token/TokenError.vue";
 import TokenSuccess from "@/views/Token/TokenSuccess.vue";
 import Calculations from "@/views/Account/Calculations.vue";
 import Shop from "@/views/Account/Shop.vue";
+import Subscriptions from "./views/Account/Subscriptions";
 
 Vue.use(VueRouter);
 
@@ -74,6 +75,12 @@ const routes = [
     path: "/konto/sklep",
     name: "shop",
     component: Shop,
+    beforeEnter: auth
+  },
+  {
+    path: "/konto/subskrypcje",
+    name: "subscriptions",
+    component: Subscriptions,
     beforeEnter: auth
   },
   { path: "/token-error", name: "token-error", component: TokenError },
