@@ -35,15 +35,11 @@ Vue.config.productionTip = false;
 Vue.directive("click-outside", ClickOutside);
 Vue.component("font-awesome-icon", FontAwesomeIcon);
 Vue.config.productionTip = false;
+Vue.http.options.root = process.env.VUE_APP_API_URL;
 
 const initAuth = async () => {
   await initializationUserAuthentication();
   new Vue({
-    http: {
-      options: {
-        root: process.env.VUE_APP_API_URL
-      }
-    },
     router,
     store,
     render(h) {

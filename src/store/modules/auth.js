@@ -7,7 +7,8 @@ export const constans = {
   SET_AUTH_USER: "SET_AUTH_USER",
   SET_ID_REPRESENTING_TOKEN_REFRESH_COUNTER: "SET_ID_REPRESENTING_TOKEN_REFRESH_COUNTER",
   SET_USER_EMAIL: "SET_USER_EMAIL",
-  SET_USER_DETAILS: "SET_USER_DETAILS"
+  SET_USER_DETAILS: "SET_USER_DETAILS",
+  SET_USER_SUBSCRIPTION: "SET_USER_SUBSCRIPTION"
 };
 
 export default {
@@ -18,12 +19,14 @@ export default {
     tokenRefreshCounterId: null,
     auth: {},
     account: {
-      user: {}
+      user: {},
+      plan: {}
     }
   },
   getters: {
     isLogged: state => state.isAuthorized,
     userDetails: state => state.account && state.account.user,
+    userPlan: state => state.account && state.account.plan,
     loggedUserEmail: state => state.authorizedUserEmail
   },
   mutations: {
@@ -47,6 +50,11 @@ export default {
 
     [constans.SET_USER_DETAILS](state, payload) {
       Vue.set(state.account, "user", payload.user);
+      if (payload.subscriptions.length) {
+        Vue.set(state.account, "plan", { type: "extended", subscriptions: payload.subscriptions });
+      } else {
+        Vue.set(state.account, "plan", { type: "basic", subscriptions: payload.subscriptions });
+      }
     },
     [constans.SET_USER_EMAIL](state, email) {
       state.authorizedUserEmail = email;

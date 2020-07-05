@@ -73,19 +73,19 @@ export async function initializationUserAuthentication() {
 
 // ENDPOINTS
 export async function loginInTheApplication(login, password) {
-  return await Vue.http.post(`/api/users/login`, {
+  return await Vue.http.post(`api/users/login`, {
     email: login,
     password: password
   });
 }
 
 export async function refreshToken(refreshToken) {
-  return await Vue.http.post(`/api/users/refresh`, { refreshToken: `Bearer ${refreshToken}` });
+  return await Vue.http.post(`api/users/refresh`, { refreshToken: `Bearer ${refreshToken}` });
 }
 
 export async function getUserDetails(email) {
   return await Vue.http.post(
-    `/api/users/details`,
+    `api/users/details`,
     { email: email },
     {
       headers: authenticationHeader()
@@ -94,9 +94,9 @@ export async function getUserDetails(email) {
 }
 
 export async function sendConfirmationEmail(email) {
-  return await Vue.http.post(`/api/users/send-confirmation-email`, { email: email });
+  return await Vue.http.post(`api/users/send-confirmation-email`, { email: email });
 }
 
 export async function registerUsers(data) {
-  return await Vue.http.post(`/api/users/register`, data);
+  return await Vue.http.post(`api/users/register`, data);
 }
