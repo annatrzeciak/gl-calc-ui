@@ -77,15 +77,20 @@ export default {
     errorMessage: ""
   }),
   computed: {
-    ...mapGetters("auth", ["loggedUserEmail"])
+    ...mapGetters("auth", ["loggedUserEmail", "userPlan"])
   },
   methods: {
+    ...mapActions("auth", ["fetchUserDetails"]),
     ...mapActions("subscription", ["createPayment"]),
 
     async buyExtendedPlan() {
+      let startDate = new Date();
+      if (this.userPlan.type === "extended") {
+        startDate = this.userPlan.subscriptions[this.userPlan.subscriptions.length - 1].endDate;
+      }
       const stripe = await loadStripe(process.env.VUE_APP_STRIPE_KEY);
 
-      this.createPayment({ email: this.loggedUserEmail }).then(async res => {
+      this.createPayment({ email: this.loggedUserEmail, startDate }).then(async res => {
         const { error } = await stripe.redirectToCheckout({
           // Make the id field from the Checkout Session creation API response
           // available to this file, so you can provide it as parameter here
@@ -96,7 +101,9 @@ export default {
       });
     }
   },
-  async created() {}
+  async created() {
+    await this.fetchUserDetails();
+  }
 };
 </script>
 

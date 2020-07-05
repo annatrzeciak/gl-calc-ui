@@ -7,10 +7,10 @@ export async function getUserSubscriptions(email) {
   });
 }
 
-export async function createPaymentIntent(email) {
+export async function createPaymentIntent(email, startDate) {
   return await Vue.http.post(
     `/api/subscriptions/` + email + "/create-payment-intent",
-    {},
+    { startDate },
     {
       headers: authenticationHeader()
     }

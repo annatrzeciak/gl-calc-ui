@@ -1,28 +1,42 @@
 <template>
   <b-container class="mt-56">
-  <h1 class="text-center">Konto</h1>
+    <h1 class="text-center">Konto</h1>
 
-  <div class="details">
-    <div><strong>Imię i nazwisko / login: </strong>{{ userDetails.name }}</div>
-    <div><strong>Email: </strong>{{ userDetails.email }}</div>
-    <div><strong>Rola: </strong>{{ userDetails.role }}</div>
-  </div>
-  <b-alert class="mt-4" show v-if="userDetails.name && !userDetails.emailConfirmed" variant="warning">
-    Nie potwierdziłeś adresu email. Tylko użytkownicy z potwierdzonym adresem email mogą korzystać
-    z pełnych możliwości serwisu. <br />
-    <strong>Nie otrzymałeś/aś emaila?</strong>
-    <b-link @click="sendConfirmationEmail">
-      Wyślij ponownie
-    </b-link>
-    wiadomość.
-  </b-alert>
-  <b-alert class="mt-4" show v-if="successMessage" variant="success">
-    {{ successMessage }}
-  </b-alert>
-  <b-alert class="mt-4" show v-if="errorMessage" variant="danger">
-    {{ errorMessage }}
-  </b-alert>
-</b-container>
+    <div class="details">
+      <div><strong>Imię i nazwisko / login: </strong>{{ userDetails.name }}</div>
+      <div><strong>Email: </strong>{{ userDetails.email }}</div>
+      <div><strong>Rola: </strong>{{ userDetails.role }}</div>
+      <div><strong>Plan: </strong>{{ userPlan.type }}</div>
+      <div v-if="userPlan.subscriptions.length">
+        <strong>Subskrypcja wygasa: </strong
+        >{{
+          new Date(
+            userPlan.subscriptions[userPlan.subscriptions.length - 1].endDate
+          ).toLocaleString()
+        }}
+      </div>
+    </div>
+    <b-alert
+      class="mt-4"
+      show
+      v-if="userDetails.name && !userDetails.emailConfirmed"
+      variant="warning"
+    >
+      Nie potwierdziłeś adresu email. Tylko użytkownicy z potwierdzonym adresem email mogą korzystać
+      z pełnych możliwości serwisu. <br />
+      <strong>Nie otrzymałeś/aś emaila?</strong>
+      <b-link @click="sendConfirmationEmail">
+        Wyślij ponownie
+      </b-link>
+      wiadomość.
+    </b-alert>
+    <b-alert class="mt-4" show v-if="successMessage" variant="success">
+      {{ successMessage }}
+    </b-alert>
+    <b-alert class="mt-4" show v-if="errorMessage" variant="danger">
+      {{ errorMessage }}
+    </b-alert>
+  </b-container>
 </template>
 
 <script>
@@ -35,7 +49,7 @@ export default {
     errorMessage: ""
   }),
   computed: {
-    ...mapGetters("auth", ["userDetails", "loggedUserEmail"])
+    ...mapGetters("auth", ["userDetails", "loggedUserEmail", "userPlan"])
   },
   methods: {
     ...mapActions("auth", ["fetchUserDetails", "sendAgainConfirmationEmail"]),
