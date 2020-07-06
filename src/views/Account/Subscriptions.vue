@@ -1,5 +1,5 @@
 <template>
-  <b-container class="mt-56">
+  <div>
     <h1 class="text-center">Subskrypcje</h1>
     <div role="tablist" v-if="allSubscriptions">
       <b-card
@@ -85,7 +85,7 @@
       </b-card>
     </div>
     <Spinner v-if="subscriptionsAreLoaded" />
-  </b-container>
+  </div>
 </template>
 
 <script>

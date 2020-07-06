@@ -1,5 +1,5 @@
 <template>
-  <b-container class="mt-56">
+  <div>
     <h1 class="text-center">Kalkulacje</h1>
     <div role="tablist" v-if="allCalculations">
       <b-card no-body class="mb-1" v-for="calculation of allCalculations" :key="calculation._id">
@@ -29,7 +29,7 @@
       </b-card>
     </div>
     <Spinner v-if="calculationsAreLoaded" />
-  </b-container>
+  </div>
 </template>
 
 <script>

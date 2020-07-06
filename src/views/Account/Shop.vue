@@ -1,5 +1,5 @@
 <template>
-  <b-container class="mt-56">
+  <div>
     <h1 class="text-center">Sklep</h1>
     <div class="text-center mt-5">
       <table class="table table-hover">
@@ -63,7 +63,7 @@
         >Płatność zakończona pomyślnie</b-alert
       >
     </div>
-  </b-container>
+  </div>
 </template>
 
 <script>

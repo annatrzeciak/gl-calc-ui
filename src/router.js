@@ -63,25 +63,29 @@ const routes = [
     path: "/konto",
     name: "account",
     component: Account,
-    beforeEnter: auth
-  },
-  {
-    path: "/konto/kalkulacje",
-    name: "calculations",
-    component: Calculations,
-    beforeEnter: auth
-  },
-  {
-    path: "/konto/sklep",
-    name: "shop",
-    component: Shop,
-    beforeEnter: auth
-  },
-  {
-    path: "/konto/subskrypcje",
-    name: "subscriptions",
-    component: Subscriptions,
-    beforeEnter: auth
+    beforeEnter: auth,
+    children: [
+      {
+        path: "kalkulacje",
+        name: "calculations",
+        component: Calculations,
+        beforeEnter: auth,
+
+      },
+      {
+        path: "sklep",
+        name: "shop",
+        component: Shop,
+        beforeEnter: auth,
+
+      },
+      {
+        path: "subskrypcje",
+        name: "subscriptions",
+        component: Subscriptions,
+        beforeEnter: auth,
+      }
+    ]
   },
   { path: "/token-error", name: "token-error", component: TokenError },
   { path: "/token-success", name: "token-success", component: TokenSuccess }

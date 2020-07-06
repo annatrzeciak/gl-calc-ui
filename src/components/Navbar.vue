@@ -12,6 +12,9 @@
           <router-link tag="b-dropdown-item" :to="{ name: 'account' }">{{
             loggedUserEmail ? loggedUserEmail : "konto"
           }}</router-link>
+          <router-link tag="b-dropdown-item" :to="{ name: 'subscriptions' }"
+          >subskrypcje</router-link
+          >
           <router-link tag="b-dropdown-item" :to="{ name: 'calculations' }"
             >kalkulacje</router-link
           >
