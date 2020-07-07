@@ -32,7 +32,9 @@ export default {
       this.calculations.forEach(calcItem => {
         sum +=
           (calcItem.product.details.gi.val *
-            Math.abs(calcItem.product.details.carbohydrate.val - calcItem.product.details.fibre.val) *
+            Math.abs(
+              calcItem.product.details.carbohydrate.val - calcItem.product.details.fibre.val
+            ) *
             calcItem.count) /
           10000;
       });

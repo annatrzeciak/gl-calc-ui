@@ -397,7 +397,8 @@
           <div>
             {{
               Math.round(
-                productDetails.gi.val * Math.abs(productDetails.carbohydrate.val - productDetails.fibre.val)
+                productDetails.gi.val *
+                  Math.abs(productDetails.carbohydrate.val - productDetails.fibre.val)
               ) / 100
             }}
           </div>

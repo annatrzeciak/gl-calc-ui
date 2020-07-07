@@ -17,7 +17,7 @@ export default {
   name: "SearchInput",
   props: {
     value: { type: String, required: true },
-    disabled: { type: Boolean, required: false, default:false }
+    disabled: { type: Boolean, required: false, default: false }
   }
 };
 </script>

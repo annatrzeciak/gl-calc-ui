@@ -13,14 +13,10 @@
             loggedUserEmail ? loggedUserEmail : "konto"
           }}</router-link>
           <router-link tag="b-dropdown-item" :to="{ name: 'subscriptions' }"
-          >subskrypcje</router-link
+            >subskrypcje</router-link
           >
-          <router-link tag="b-dropdown-item" :to="{ name: 'calculations' }"
-            >kalkulacje</router-link
-          >
-          <router-link tag="b-dropdown-item" :to="{ name: 'shop' }"
-          >sklep</router-link
-          >
+          <router-link tag="b-dropdown-item" :to="{ name: 'calculations' }">kalkulacje</router-link>
+          <router-link tag="b-dropdown-item" :to="{ name: 'shop' }">sklep</router-link>
           <b-dropdown-item @click="logoutUser">wyloguj</b-dropdown-item>
         </b-nav-item-dropdown>
       </b-navbar-nav>

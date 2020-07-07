@@ -26,7 +26,7 @@ export default {
         })
         .catch(err => Promise.reject(err));
     },
-    createPayment({commit, state},{email, startDate}){
+    createPayment({ commit, state }, { email, startDate }) {
       return Subscription.createPaymentIntent(email, startDate)
         .then(success => {
           commit(constans.SET_SUBSCRIPTIONS, success.data.session);
