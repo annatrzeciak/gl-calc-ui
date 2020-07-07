@@ -54,6 +54,7 @@ export default {
       step: 0,
       searchValue: "",
       productsToCalculate: [
+        { mealNumber: 0, products: [] },
         { mealNumber: 1, products: [] },
         { mealNumber: 2, products: [] },
         { mealNumber: 3, products: [] },
@@ -133,8 +134,7 @@ export default {
         .then(() => this.$toasted.success("Kalkulacja zapisna pomyślnie"))
         .catch(() =>
           this.$toasted.error("Wystąpił błąd podczas zapisywania. Spróbuj ponownie później")
-        )
-
+        );
     }
   },
   created() {
@@ -144,7 +144,7 @@ export default {
     }
   },
   async mounted() {
-    if (this.loggedUserEmail) await this.fetchTodayCalculations({ email: this.loggedUserEmail });
+    await this.fetchTodayCalculations({ email: this.loggedUserEmail });
   },
   watch: {
     $route() {

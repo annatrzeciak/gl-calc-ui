@@ -11,41 +11,49 @@
     <div class="calculator-content">
       <div v-if="calculationsIncludesProducts">
         <h4>Dodane produkty</h4>
-        <div v-if="firstMeal && firstMeal.products.length">
-          <h5>Śniadanie</h5>
+        <div v-if="!isLogged && unnumberedMeal && unnumberedMeal.products.length">
           <CalculatorTable
-            :calculations="firstMeal.products"
-            @remove-product="$emit('remove-product', { productId: $event, mealNumber: 1 })"
+            :calculations="unnumberedMeal.products"
+            @remove-product="$emit('remove-product', { productId: $event, mealNumber: 0 })"
           />
         </div>
-        <div v-if="secondMeal && secondMeal.products.length">
-          <h5>II Śniadanie</h5>
-          <CalculatorTable
-            :calculations="secondMeal.products"
-            @remove-product="$emit('remove-product', { productId: $event, mealNumber: 2 })"
-          />
-        </div>
-        <div v-if="thirdMeal && thirdMeal.products.length">
-          <h5>Obiad</h5>
-          <CalculatorTable
-            :calculations="thirdMeal.products"
-            @remove-product="$emit('remove-product', { productId: $event, mealNumber: 3 })"
-          />
-        </div>
-        <div v-if="fourthMeal.products.length">
-          <h5>Podwieczorek</h5>
-          <CalculatorTable
-            :calculations="fourthMeal.products"
-            @remove-product="$emit('remove-product', { productId: $event, mealNumber: 4 })"
-          />
-        </div>
-        <div v-if="fifthMeal && fifthMeal.products.length">
-          <h5>Kolacja</h5>
-          <CalculatorTable
-            :calculations="fifthMeal.products"
-            @remove-product="$emit('remove-product', { productId: $event, mealNumber: 5 })"
-          />
-        </div>
+        <template v-else>
+          <div v-if="firstMeal && firstMeal.products.length">
+            <h5>Śniadanie</h5>
+            <CalculatorTable
+              :calculations="firstMeal.products"
+              @remove-product="$emit('remove-product', { productId: $event, mealNumber: 1 })"
+            />
+          </div>
+          <div v-if="secondMeal && secondMeal.products.length">
+            <h5>II Śniadanie</h5>
+            <CalculatorTable
+              :calculations="secondMeal.products"
+              @remove-product="$emit('remove-product', { productId: $event, mealNumber: 2 })"
+            />
+          </div>
+          <div v-if="thirdMeal && thirdMeal.products.length">
+            <h5>Obiad</h5>
+            <CalculatorTable
+              :calculations="thirdMeal.products"
+              @remove-product="$emit('remove-product', { productId: $event, mealNumber: 3 })"
+            />
+          </div>
+          <div v-if="fourthMeal.products.length">
+            <h5>Podwieczorek</h5>
+            <CalculatorTable
+              :calculations="fourthMeal.products"
+              @remove-product="$emit('remove-product', { productId: $event, mealNumber: 4 })"
+            />
+          </div>
+          <div v-if="fifthMeal && fifthMeal.products.length">
+            <h5>Kolacja</h5>
+            <CalculatorTable
+              :calculations="fifthMeal.products"
+              @remove-product="$emit('remove-product', { productId: $event, mealNumber: 5 })"
+            />
+          </div>
+        </template>
       </div>
       <div v-else>Dodaj produkty do kalkulatora</div>
     </div>
@@ -54,6 +62,7 @@
 
 <script>
 import CalculatorTable from "./CalculatorTable";
+import { mapGetters } from "vuex";
 export default {
   name: "Calculator",
   components: { CalculatorTable },
@@ -62,11 +71,17 @@ export default {
     calculatorIsOpened: { type: Boolean, default: false }
   },
   computed: {
+    ...mapGetters("auth", ["isLogged"]),
     calculationsIncludesProducts() {
       if (this.calculations) {
         return Object.values(this.calculations).find(calc => calc.products.length);
       }
       return false;
+    },
+    unnumberedMeal() {
+      if (this.calculations) return this.calculations.find(calc => calc.mealNumber === 0);
+
+      return null;
     },
     firstMeal() {
       if (this.calculations) return this.calculations.find(calc => calc.mealNumber === 1);
