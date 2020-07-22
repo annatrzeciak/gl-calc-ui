@@ -1,5 +1,31 @@
 # gl-calculator
 
+## About
+
+Application deployed in the Heroku cloud platform at https://gl-calc.herokuapp.com/
+
+Front app to api: https://github.com/annatrzeciak/gl-calc-api
+
+Used: [Vue.js](https://vuejs.org/)
+
+To state management: [Vuex](https://vuex.vuejs.org/)
+
+Additional: [bootstrap](https://bootstrap-vue.org/), [stripe](https://stripe.com/) to handle payments, [fortawesome](https://fortawesome.com/) as main icons library, [JWT](https://jwt.io/) to generate and check auth tokens.
+
+## Tests on the deployed version
+
+It is possible to test on the deployed version https://gl-calc.herokuapp.com/
+
+### Testing card
+
+`4242 4242 4242 4242` Succeeds and immediately processes the payment
+
+`4000 0000 0000 3220`	3D Secure 2 authentication must be completed for a successful payment.
+
+`4000 0000 0000 9995`	Always fails with a decline code of insufficient_funds.
+
+https://stripe.com/docs/payments/checkout/accept-a-payment
+
 ## Project setup
 ```
 yarn install
