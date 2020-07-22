@@ -16,12 +16,17 @@ Additional: [bootstrap](https://bootstrap-vue.org/), [stripe](https://stripe.com
 
 It is possible to test on the deployed version https://gl-calc.herokuapp.com/
 
+#### default account to test:
+
+login: `test-user@example.com`  
+password: `test-pass` 
+
+or create own account
+
 ### Testing card
 
-`4242 4242 4242 4242` Succeeds and immediately processes the payment
-
-`4000 0000 0000 3220`	3D Secure 2 authentication must be completed for a successful payment.
-
+`4242 4242 4242 4242` Succeeds and immediately processes the payment  
+`4000 0000 0000 3220`	3D Secure 2 authentication must be completed for a successful payment.  
 `4000 0000 0000 9995`	Always fails with a decline code of insufficient_funds.
 
 https://stripe.com/docs/payments/checkout/accept-a-payment
