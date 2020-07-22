@@ -25,6 +25,8 @@
             ).toLocaleString()
           }}
         </div>
+        <div class="mt-4" v-else>Nie masz żadnych subskrypcji. Przejdź do <router-link :to="{ name: 'shop' }" >sklepu</router-link>, zakup plan rozszerzony i ciesz się z nieograniczonych możliwości.</div>
+
       </div>
       <b-alert
         class="mt-4"

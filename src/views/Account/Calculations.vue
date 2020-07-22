@@ -1,7 +1,7 @@
 <template>
   <div>
     <h1 class="text-center">Kalkulacje</h1>
-    <div role="tablist" v-if="allCalculations">
+    <div role="tablist" v-if="allCalculations.length">
       <b-card no-body class="mb-1" v-for="calculation of allCalculations" :key="calculation._id">
         <b-card-header header-tag="header" class="p-1" role="tab">
           <b-button class="text-left" block v-b-toggle="'accordion-' + calculation._id">
@@ -28,6 +28,7 @@
         </b-collapse>
       </b-card>
     </div>
+    <div class="text-center mt-4" v-else-if="!allCalculations.length && !calculationsAreLoaded">Nie masz żadnych zapisanych kalkulacji. Przejdź do <router-link :to="{ name: 'search' }" >wyszukiwarki</router-link> i znajdź interesujące Cię produkty.</div>
     <Spinner v-if="calculationsAreLoaded" />
   </div>
 </template>
