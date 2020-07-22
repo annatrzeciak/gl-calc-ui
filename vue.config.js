@@ -5,7 +5,7 @@ module.exports = {
   devServer: {
     proxy: process.env.VUE_APP_API_URL,
     disableHostCheck: true,
-    host: "0.0.0.0",
+    host: "0.0.0.0"
   },
   css: {
     sourceMap: true

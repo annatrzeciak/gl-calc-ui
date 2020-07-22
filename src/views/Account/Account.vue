@@ -25,6 +25,8 @@
             ).toLocaleString()
           }}
         </div>
+        <div class="mt-4" v-else>Nie masz żadnych subskrypcji. Przejdź do <router-link :to="{ name: 'shop' }" >sklepu</router-link>, zakup plan rozszerzony i ciesz się z nieograniczonych możliwości.</div>
+
       </div>
       <b-alert
         class="mt-4"
@@ -47,9 +49,9 @@
         {{ errorMessage }}
       </b-alert>
     </template>
-    <Subscriptions v-else-if="$route.name === 'subscriptions'"/>
-    <Calculations v-else-if="$route.name === 'calculations'"/>
-    <Shop v-else-if="$route.name === 'shop'"/>
+    <Subscriptions v-else-if="$route.name === 'subscriptions'" />
+    <Calculations v-else-if="$route.name === 'calculations'" />
+    <Shop v-else-if="$route.name === 'shop'" />
   </b-container>
 </template>
 
@@ -61,7 +63,7 @@ import Shop from "./Shop";
 
 export default {
   name: "Account",
-  components: {Shop, Calculations, Subscriptions},
+  components: { Shop, Calculations, Subscriptions },
   data: () => ({
     successMessage: "",
     errorMessage: ""

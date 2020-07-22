@@ -69,21 +69,19 @@ const routes = [
         path: "kalkulacje",
         name: "calculations",
         component: Calculations,
-        beforeEnter: auth,
-
+        beforeEnter: auth
       },
       {
         path: "sklep",
         name: "shop",
         component: Shop,
-        beforeEnter: auth,
-
+        beforeEnter: auth
       },
       {
         path: "subskrypcje",
         name: "subscriptions",
         component: Subscriptions,
-        beforeEnter: auth,
+        beforeEnter: auth
       }
     ]
   },

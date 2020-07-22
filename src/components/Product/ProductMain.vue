@@ -26,13 +26,14 @@
               @change="updateValue"
             />
             <label class="mr-3" for="inline-form-input-name">g</label>
-            <b-dropdown text="Dodaj do" variant="blue">
+            <b-dropdown text="Dodaj do" variant="blue" v-if="isLogged">
               <b-dropdown-item @click.stop="addToCalculator(1)">śniadania</b-dropdown-item>
               <b-dropdown-item @click.stop="addToCalculator(2)">II śniadania</b-dropdown-item>
               <b-dropdown-item @click.stop="addToCalculator(3)">obiadu</b-dropdown-item>
               <b-dropdown-item @click.stop="addToCalculator(4)">podwieczorku</b-dropdown-item>
               <b-dropdown-item @click.stop="addToCalculator(5)">kolacji</b-dropdown-item>
             </b-dropdown>
+            <b-button variant="blue" @click.stop="addToCalculator(0)">Dodaj</b-button>
           </b-form>
         </b-col>
         <ProductNutritionalValuesMain
@@ -70,6 +71,7 @@ export default {
   },
   computed: {
     ...mapGetters("product", ["openedProductWithDetails"]),
+    ...mapGetters("auth", ["isLogged"]),
 
     isShowedDetails() {
       return this.$route.params.productId && this.$route.params.productId == this.product._id;

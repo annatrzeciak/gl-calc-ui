@@ -1,5 +1,5 @@
 import * as Calculation from "../api/calculation";
-
+import Auth from "./auth";
 export const constans = {
   SET_CALCULATIONS: "SET_CALCULATIONS",
   SET_COUNT_CALCULATIONS: "SET_COUNT_CALCULATIONS",
@@ -39,20 +39,31 @@ export default {
         .catch(err => Promise.reject(err));
     },
     async fetchTodayCalculations({ commit, state }, { email }) {
-      return Calculation.getTodayUserCalculations(email)
-        .then(success => {
-          commit(constans.SET_TODAY_CALCULATIONS, success.data.calculations);
-          return Promise.resolve(success.data);
-        })
-        .catch(err => Promise.reject(err));
+      if (Auth.isLogged) {
+        return Calculation.getTodayUserCalculations(email)
+          .then(success => {
+            commit(constans.SET_TODAY_CALCULATIONS, success.data.calculations);
+            return Promise.resolve(success.data);
+          })
+          .catch(err => Promise.reject(err));
+      } else {
+        return Calculation.getTodayUserCalculationsFromStorage()
+          .then(calculations => {
+            commit(constans.SET_TODAY_CALCULATIONS, calculations);
+            return Promise.resolve(calculations);
+          })
+          .catch(err => Promise.reject(err));
+      }
     },
     async addCalculation({ commit }, { email, data }) {
-      return Calculation.saveCalculation(email, data)
-        .then(success => {
-          commit(constans.SET_TODAY_CALCULATIONS, success.data.calculations);
-          return Promise.resolve(success.data);
-        })
-        .catch(err => Promise.reject(err));
+      if (Auth.isLogged)
+        return Calculation.saveCalculation(email, data)
+          .then(success => {
+            commit(constans.SET_TODAY_CALCULATIONS, success.data.calculations);
+            return Promise.resolve(success.data);
+          })
+          .catch(err => Promise.reject(err));
+      else return Calculation.saveCalculationInStorage(data);
     }
   }
 };

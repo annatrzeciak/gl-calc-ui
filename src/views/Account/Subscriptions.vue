@@ -1,7 +1,7 @@
 <template>
   <div>
     <h1 class="text-center">Subskrypcje</h1>
-    <div role="tablist" v-if="allSubscriptions">
+    <div role="tablist" v-if="allSubscriptions.length">
       <b-card
         no-body
         class="mb-1"
@@ -84,6 +84,7 @@
         </b-collapse>
       </b-card>
     </div>
+    <div class="text-center mt-4" v-else-if="!allSubscriptions.length && !subscriptionsAreLoaded">Nie masz żadnych subskrypcji. Przejdź do <router-link :to="{ name: 'shop' }" >sklepu</router-link>, zakup plan rozszerzony i ciesz się z nieograniczonych możliwości.</div>
     <Spinner v-if="subscriptionsAreLoaded" />
   </div>
 </template>
