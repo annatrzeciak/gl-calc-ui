@@ -2,7 +2,7 @@
 
 ## About
 
-Application deployed in the Heroku cloud platform at https://gl-calc.herokuapp.com/
+Application deployed in the Heroku cloud platform at http://gl-calc.herokuapp.com/
 
 Front app to api: https://github.com/annatrzeciak/gl-calc-api
 
@@ -14,7 +14,7 @@ Additional: [bootstrap](https://bootstrap-vue.org/), [stripe](https://stripe.com
 
 ## Tests on the deployed version
 
-It is possible to test on the deployed version https://gl-calc.herokuapp.com/
+It is possible to test on the deployed version http://gl-calc.herokuapp.com/
 
 #### default account to test:
 
