@@ -10,6 +10,8 @@ Used: [Vue.js](https://vuejs.org/)
 
 To state management: [Vuex](https://vuex.vuejs.org/)
 
+Tests: [Cypress](https://www.cypress.io/)
+
 Additional: [bootstrap](https://bootstrap-vue.org/), [stripe](https://stripe.com/) to handle payments, [fortawesome](https://fortawesome.com/) as main icons library, [JWT](https://jwt.io/) to generate and check auth tokens.
 
 ## Tests on the deployed version
