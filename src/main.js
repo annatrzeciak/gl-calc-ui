@@ -13,6 +13,7 @@ library.add(fas);
 import { BootstrapVue, IconsPlugin } from "bootstrap-vue";
 import Vuelidate from "vuelidate";
 import Toasted from "vue-toasted";
+import VueAnalytics from "vue-analytics";
 
 import App from "./App.vue";
 import ClickOutside from "@/directives/ClickOutside";
@@ -30,6 +31,9 @@ Vue.use(Toasted, {
   duration: 5000,
   keepOnHover: true,
   iconPack: "fontawesome"
+});
+Vue.use(VueAnalytics, {
+  id: process.env.VUE_APP_GOOGLE_ANALYTICS
 });
 Vue.config.productionTip = false;
 Vue.directive("click-outside", ClickOutside);
