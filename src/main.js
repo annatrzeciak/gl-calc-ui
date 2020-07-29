@@ -13,12 +13,17 @@ library.add(fas);
 import { BootstrapVue, IconsPlugin } from "bootstrap-vue";
 import Vuelidate from "vuelidate";
 import Toasted from "vue-toasted";
+import VueAnalytics from "vue-analytics";
 
 import App from "./App.vue";
 import ClickOutside from "@/directives/ClickOutside";
 import store from "./store/store";
 import router from "./router";
 import { initializationUserAuthentication } from "./store/api/auth";
+Vue.use(VueAnalytics, {
+  id: process.env.VUE_APP_GOOGLE_ANALYTICS,
+  router
+});
 
 Vue.use(VueResource);
 Vue.use(Vuelidate);
@@ -31,6 +36,7 @@ Vue.use(Toasted, {
   keepOnHover: true,
   iconPack: "fontawesome"
 });
+
 Vue.config.productionTip = false;
 Vue.directive("click-outside", ClickOutside);
 Vue.component("font-awesome-icon", FontAwesomeIcon);
